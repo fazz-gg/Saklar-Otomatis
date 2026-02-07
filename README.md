@@ -1,0 +1,1 @@
+# Saklar-Otomatis
