@@ -1,247 +1,166 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>ESP32 Relay Control Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
     body {
-      font-family: 'Segoe UI', Arial, sans-serif;
+      font-family: Arial, sans-serif;
       text-align: center;
-      background-color: #f0f2f5;
+      background-color: #f9f9f9;
+      margin: 0;
+      padding: 0 10px 40px;
       display: flex;
       flex-direction: column;
       min-height: 100vh;
-      color: #333;
+      justify-content: space-between;
     }
     h1 {
       margin-top: 30px;
       font-size: 1.8rem;
-      color: #1a1a2e;
+    }
+    .relay-card {
+      display: inline-block;
+      background-color: white;
+      padding: 20px;
+      margin: 15px;
+      border-radius: 15px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      width: 220px;
+      vertical-align: top;
+    }
+    .relay-card h2 {
+      margin-bottom: 10px;
+      font-size: 1.3rem;
+    }
+    .relay-card p {
+      margin-bottom: 10px;
+      font-size: 1rem;
+    }
+    .relay-card button {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 10px;
+      color: white;
+      background-color: blue;
+      cursor: pointer;
+      font-size: 16px;
+      width: 90%;
+      transition: opacity 0.3s ease;
+    }
+    .relay-card button:hover {
+      opacity: 0.8;
+    }
+    .relay-card button:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+    #allOffBtn, #logoutBtn {
+      max-width: 300px;
+      width: 90%;
+      padding: 12px 25px;
+      font-size: 16px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      margin: 15px auto;
+      display: block;
+      color: white;
+      transition: opacity 0.3s ease;
+    }
+    #allOffBtn {
+      background-color: #d32f2f;
+    }
+    #allOffBtn:hover {
+      opacity: 0.8;
+    }
+    #logoutBtn {
+      background-color: #555;
+    }
+    #logoutBtn:hover {
+      opacity: 0.8;
     }
 
-    /* LOGIN FORM */
+    #dashboard {
+      display: none;
+    }
     #loginForm {
       max-width: 400px;
       margin: 80px auto 20px;
       background: white;
-      padding: 30px 24px;
-      border-radius: 16px;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-    }
-    #loginForm h2 {
-      margin-bottom: 20px;
-      font-size: 1.4rem;
-      color: #1a1a2e;
+      padding: 30px 20px;
+      border-radius: 15px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
     }
     #loginForm input {
       width: 100%;
       padding: 12px 15px;
-      margin: 8px 0 16px;
+      margin: 10px 0 20px;
       font-size: 1rem;
-      border: 2px solid #e0e0e0;
+      border: 1.5px solid #ccc;
       border-radius: 10px;
-      outline: none;
+      box-sizing: border-box;
+      outline-offset: 2px;
       transition: border-color 0.3s ease;
     }
     #loginForm input:focus {
-      border-color: #2563eb;
+      border-color: #1e88e5;
     }
     #loginForm button {
       width: 100%;
-      background-color: #2563eb;
+      background-color: #1e88e5;
       color: white;
       padding: 12px;
-      font-size: 17px;
-      font-weight: 600;
+      font-size: 18px;
       border: none;
       border-radius: 10px;
       cursor: pointer;
-      transition: background-color 0.2s ease;
+      transition: background-color 0.3s ease;
     }
     #loginForm button:hover {
-      background-color: #1d4ed8;
+      background-color: #1565c0;
     }
-
-    /* DASHBOARD */
-    #dashboard {
-      display: none;
-      flex: 1;
-      padding: 0 16px 40px;
-    }
-    .relay-container {
+    #dashboard .relay-container {
       max-width: 960px;
       margin: 20px auto 0;
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
-      gap: 16px;
     }
-
-    /* RELAY CARD */
-    .relay-card {
-      background-color: white;
-      padding: 24px 20px;
-      border-radius: 16px;
-      box-shadow: 0 2px 12px rgba(0,0,0,0.08);
-      width: 220px;
-      transition: box-shadow 0.3s ease;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-    .relay-card:hover {
-      box-shadow: 0 4px 20px rgba(0,0,0,0.12);
-    }
-    .relay-card h2 {
-      margin-bottom: 8px;
-      font-size: 1.2rem;
-      color: #1a1a2e;
-    }
-
-    /* STATUS INDICATOR */
-    .status-row {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      margin-bottom: 16px;
-    }
-    .status-dot {
-      width: 12px;
-      height: 12px;
-      border-radius: 50%;
-      background-color: #9ca3af;
-      transition: background-color 0.3s ease;
-    }
-    .status-dot.on {
-      background-color: #22c55e;
-      box-shadow: 0 0 8px rgba(34,197,94,0.5);
-    }
-    .status-text {
-      font-size: 0.95rem;
-      font-weight: 600;
-      color: #6b7280;
-      min-width: 32px;
-    }
-    .status-text.on {
-      color: #16a34a;
-    }
-
-    /* TOGGLE BUTTON */
-    .toggle-btn {
-      width: 100%;
-      padding: 10px 20px;
-      border: none;
-      border-radius: 10px;
-      color: white;
-      font-size: 15px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: background-color 0.2s ease, transform 0.1s ease;
-      background-color: #2563eb;
-      position: relative;
-    }
-    .toggle-btn:hover {
-      filter: brightness(1.1);
-    }
-    .toggle-btn:active {
-      transform: scale(0.97);
-    }
-    .toggle-btn.on {
-      background-color: #22c55e;
-    }
-    .toggle-btn.off {
-      background-color: #2563eb;
-    }
-    .toggle-btn:disabled {
-      opacity: 0.6;
-      cursor: not-allowed;
-    }
-
-    /* ACTION BUTTONS */
-    .action-buttons {
-      max-width: 400px;
-      margin: 24px auto 0;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      padding: 0 16px;
-    }
-    #allOffBtn, #logoutBtn {
-      width: 100%;
-      padding: 12px 25px;
-      font-size: 16px;
-      font-weight: 600;
-      border: none;
-      border-radius: 10px;
-      cursor: pointer;
-      color: white;
-      transition: background-color 0.2s ease, transform 0.1s ease;
-    }
-    #allOffBtn {
-      background-color: #dc2626;
-    }
-    #allOffBtn:hover {
-      background-color: #b91c1c;
-    }
-    #allOffBtn:active {
-      transform: scale(0.97);
-    }
-    #logoutBtn {
-      background-color: #6b7280;
-    }
-    #logoutBtn:hover {
-      background-color: #4b5563;
-    }
-    #logoutBtn:active {
-      transform: scale(0.97);
-    }
-
-    /* CONNECTION STATUS */
-    .connection-status {
+    .connection-bar {
       display: flex;
       align-items: center;
       justify-content: center;
       gap: 6px;
-      margin-top: 12px;
+      margin-top: 10px;
       font-size: 0.85rem;
-      color: #9ca3af;
+      color: #888;
     }
-    .connection-dot {
-      width: 8px;
-      height: 8px;
+    .conn-dot {
+      width: 9px;
+      height: 9px;
       border-radius: 50%;
-      background-color: #9ca3af;
+      background-color: #ccc;
     }
-    .connection-dot.connected {
-      background-color: #22c55e;
-    }
-    .connection-dot.disconnected {
-      background-color: #ef4444;
-    }
+    .conn-dot.online { background-color: #4caf50; }
+    .conn-dot.offline { background-color: #f44336; }
 
-    footer {
-      font-size: 0.85rem;
-      color: #9ca3af;
-      padding: 16px 0;
-      margin-top: auto;
-    }
-
-    /* Responsive */
     @media (max-width: 700px) {
       .relay-card {
-        width: 100%;
-        max-width: 340px;
+        width: 90%;
+        margin: 10px auto;
+        display: block;
       }
-      h1 {
-        font-size: 1.4rem;
+      body {
+        padding: 0 10px 60px;
       }
+    }
+    footer {
+      font-size: 0.9rem;
+      color: #666;
+      padding: 10px 0;
+      margin-top: 40px;
     }
   </style>
 </head>
@@ -249,75 +168,62 @@
 
   <h1>ESP32 Relay Control Dashboard</h1>
 
-  <!-- LOGIN FORM -->
+  <!-- Login form -->
   <div id="loginForm">
-    <h2>Login</h2>
-    <input type="email" id="email" placeholder="Email" />
-    <input type="password" id="password" placeholder="Password" />
+    <input type="email" id="email" placeholder="Enter Email" required />
+    <input type="password" id="password" placeholder="Enter Password" required />
     <button id="loginBtn">Login</button>
   </div>
 
-  <!-- DASHBOARD -->
+  <!-- Dashboard -->
   <div id="dashboard">
-    <div class="connection-status">
-      <div class="connection-dot" id="connectionDot"></div>
-      <span id="connectionText">Connecting...</span>
+    <div class="connection-bar">
+      <div class="conn-dot" id="connDot"></div>
+      <span id="connText">Connecting...</span>
     </div>
 
     <div class="relay-container">
       <div class="relay-card">
         <h2>Relay 1</h2>
-        <div class="status-row">
-          <div class="status-dot" id="dot1"></div>
-          <span class="status-text" id="status1">OFF</span>
-        </div>
-        <button class="toggle-btn off" id="btn1" disabled>Turn ON</button>
+        <p>Status: <span id="status1">Loading...</span></p>
+        <button id="btn1">Toggle</button>
       </div>
 
       <div class="relay-card">
         <h2>Relay 2</h2>
-        <div class="status-row">
-          <div class="status-dot" id="dot2"></div>
-          <span class="status-text" id="status2">OFF</span>
-        </div>
-        <button class="toggle-btn off" id="btn2" disabled>Turn ON</button>
+        <p>Status: <span id="status2">Loading...</span></p>
+        <button id="btn2">Toggle</button>
       </div>
 
       <div class="relay-card">
         <h2>Relay 3</h2>
-        <div class="status-row">
-          <div class="status-dot" id="dot3"></div>
-          <span class="status-text" id="status3">OFF</span>
-        </div>
-        <button class="toggle-btn off" id="btn3" disabled>Turn ON</button>
+        <p>Status: <span id="status3">Loading...</span></p>
+        <button id="btn3">Toggle</button>
       </div>
 
       <div class="relay-card">
         <h2>Relay 4</h2>
-        <div class="status-row">
-          <div class="status-dot" id="dot4"></div>
-          <span class="status-text" id="status4">OFF</span>
-        </div>
-        <button class="toggle-btn off" id="btn4" disabled>Turn ON</button>
+        <p>Status: <span id="status4">Loading...</span></p>
+        <button id="btn4">Toggle</button>
       </div>
     </div>
 
-    <div class="action-buttons">
-      <button id="allOffBtn">All OFF</button>
-      <button id="logoutBtn">Logout</button>
-    </div>
+    <button id="allOffBtn">All OFF</button>
+    <button id="logoutBtn">Logout</button>
   </div>
 
-  <footer>Created by Tech StudyCell</footer>
+  <footer>
+    Created by Tech StudyCell
+  </footer>
 
-  <!-- Firebase SDKs -->
-  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+  <!-- Firebase SDKs - SAMA DENGAN VERSI ANDA -->
+  <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-database-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth-compat.js"></script>
 
   <script>
     // =============================================
-    // Firebase Configuration
+    // Firebase config - SAMA DENGAN CONFIG ANDA
     // =============================================
     const firebaseConfig = {
       apiKey: "AIzaSyC3QCUH43QS7eQknX3kXaiG7WlQ_0VIt4I",
@@ -331,254 +237,266 @@
 
     firebase.initializeApp(firebaseConfig);
 
-    // =============================================
-    // Login credentials
-    // =============================================
     const allowedEmail = "fazz@gmail.com";
     const allowedPassword = "100100";
 
     // =============================================
-    // DOM Elements
+    // STATE MANAGEMENT (KUNCI PERBAIKAN)
+    //
+    // relayStates = state terakhir dari Firebase listener
+    // relayLocks  = mencegah klik ganda saat menunggu konfirmasi
+    // lockTimers  = safety timeout agar lock tidak permanen
+    // =============================================
+    const relayStates = {};
+    const relayLocks = {};
+    const lockTimers = {};
+    let listenersActive = false;
+    const listenerRefs = [];
+
+    // =============================================
+    // DOM
     // =============================================
     const loginForm = document.getElementById("loginForm");
-    const dashboard = document.getElementById("dashboard");
-    const loginBtn = document.getElementById("loginBtn");
-    const connectionDot = document.getElementById("connectionDot");
-    const connectionText = document.getElementById("connectionText");
+    const dashboard  = document.getElementById("dashboard");
+    const loginBtn   = document.getElementById("loginBtn");
 
     // =============================================
-    // State Management - KEY FIX
-    // Track relay states locally to avoid get() round-trip
+    // LOGIN
     // =============================================
-    const relayStates = {
-      relay1: false,
-      relay2: false,
-      relay3: false,
-      relay4: false
-    };
+    loginBtn.addEventListener("click", doLogin);
+    document.getElementById("email").addEventListener("keypress", function(e) {
+      if (e.key === "Enter") doLogin();
+    });
+    document.getElementById("password").addEventListener("keypress", function(e) {
+      if (e.key === "Enter") doLogin();
+    });
 
-    // Lock mechanism to prevent rapid double-clicks
-    const relayLocks = {
-      relay1: false,
-      relay2: false,
-      relay3: false,
-      relay4: false
-    };
-
-    // Track if listeners are initialized
-    let listenersInitialized = false;
-    // Track active Firebase listeners for cleanup
-    const activeListeners = [];
-
-    // =============================================
-    // Login Handler
-    // =============================================
-    loginBtn.addEventListener("click", () => {
-      const email = document.getElementById("email").value.trim();
-      const password = document.getElementById("password").value;
+    function doLogin() {
+      var email = document.getElementById("email").value.trim();
+      var password = document.getElementById("password").value;
 
       if (!email || !password) {
         alert("Please enter email and password.");
         return;
       }
 
-      if (email === allowedEmail && password === allowedPassword) {
-        loginBtn.disabled = true;
-        loginBtn.textContent = "Logging in...";
-
-        firebase.auth().signInWithEmailAndPassword(email, password)
-          .then(userCredential => {
-            console.log("Signed in as", userCredential.user.email);
-            loginForm.style.display = "none";
-            dashboard.style.display = "block";
-            startRelayControl();
-          })
-          .catch(error => {
-            alert("Firebase login failed: " + error.message);
-          })
-          .finally(() => {
-            loginBtn.disabled = false;
-            loginBtn.textContent = "Login";
-          });
-      } else {
+      if (email !== allowedEmail || password !== allowedPassword) {
         alert("Invalid email or password.");
+        return;
       }
-    });
 
-    // =============================================
-    // Connection Status Monitor
-    // =============================================
-    function monitorConnection() {
-      const connectedRef = firebase.database().ref(".info/connected");
-      connectedRef.on("value", (snap) => {
-        if (snap.val() === true) {
-          connectionDot.className = "connection-dot connected";
-          connectionText.textContent = "Connected";
-        } else {
-          connectionDot.className = "connection-dot disconnected";
-          connectionText.textContent = "Disconnected";
-        }
-      });
+      loginBtn.disabled = true;
+      loginBtn.textContent = "Logging in...";
+
+      firebase.auth().signInWithEmailAndPassword(email, password)
+        .then(function(userCredential) {
+          loginForm.style.display = "none";
+          dashboard.style.display = "block";
+          startRelayControl();
+        })
+        .catch(function(error) {
+          alert("Firebase login failed: " + error.message);
+        })
+        .finally(function() {
+          loginBtn.disabled = false;
+          loginBtn.textContent = "Login";
+        });
     }
 
     // =============================================
-    // Update UI for a specific relay
+    // UPDATE UI RELAY
     // =============================================
-    function updateRelayUI(relayId, state) {
-      const statusText = document.getElementById(`status${relayId}`);
-      const statusDot = document.getElementById(`dot${relayId}`);
-      const toggleButton = document.getElementById(`btn${relayId}`);
+    function updateUI(id, isOn) {
+      var statusEl = document.getElementById("status" + id);
+      var btnEl    = document.getElementById("btn" + id);
 
-      const isOn = !!state;
-
-      statusText.textContent = isOn ? "ON" : "OFF";
-      statusText.className = "status-text" + (isOn ? " on" : "");
-
-      statusDot.className = "status-dot" + (isOn ? " on" : "");
-
-      toggleButton.textContent = isOn ? "Turn OFF" : "Turn ON";
-      toggleButton.className = "toggle-btn " + (isOn ? "on" : "off");
+      statusEl.innerText = isOn ? "ON" : "OFF";
+      btnEl.style.backgroundColor = isOn ? "green" : "blue";
+      btnEl.textContent = isOn ? "Turn OFF" : "Turn ON";
     }
 
     // =============================================
-    // MAIN FIX: Relay Control Logic
+    // KONTROL RELAY (LOGIKA UTAMA - DIPERBAIKI)
     // =============================================
     function startRelayControl() {
-      // Prevent double initialization
-      if (listenersInitialized) return;
-      listenersInitialized = true;
+      if (listenersActive) return;
+      listenersActive = true;
 
-      const db = firebase.database();
+      var db = firebase.database();
 
-      // Monitor connection status
-      monitorConnection();
+      // Monitor koneksi Firebase
+      var connRef = db.ref(".info/connected");
+      connRef.on("value", function(snap) {
+        var connDot  = document.getElementById("connDot");
+        var connText = document.getElementById("connText");
+        if (snap.val() === true) {
+          connDot.className = "conn-dot online";
+          connText.textContent = "Connected";
+        } else {
+          connDot.className = "conn-dot offline";
+          connText.textContent = "Disconnected";
+        }
+      });
 
-      const relays = [
+      var relays = [
         { id: 1, path: "relay1" },
         { id: 2, path: "relay2" },
         { id: 3, path: "relay3" },
         { id: 4, path: "relay4" }
       ];
 
-      relays.forEach(relay => {
-        const toggleButton = document.getElementById(`btn${relay.id}`);
-        const relayRef = db.ref("/" + relay.path);
+      relays.forEach(function(relay) {
+        var relayRef = db.ref("/" + relay.path);
+        var btnEl    = document.getElementById("btn" + relay.id);
 
-        // -----------------------------------------------
-        // FIX 1: Real-time listener updates local state
-        // No more get() round-trip needed!
-        // -----------------------------------------------
-        const listener = relayRef.on("value", (snapshot) => {
-          const state = snapshot.val();
-          relayStates[relay.path] = !!state;
-          updateRelayUI(relay.id, state);
+        // Inisialisasi state
+        relayStates[relay.path] = false;
+        relayLocks[relay.path]  = false;
 
-          // Enable button once we have first data
-          toggleButton.disabled = false;
+        // ==============================================
+        // PERBAIKAN 1: LISTENER REAL-TIME
+        //
+        // - Menyimpan state terbaru ke relayStates
+        // - Update UI sesuai state dari Firebase
+        // - MELEPAS LOCK setelah Firebase konfirmasi
+        //
+        // Listener ini adalah "sumber kebenaran" (source of truth).
+        // Apapun yang terjadi (klik web, tombol fisik, ESP32),
+        // UI akan selalu sinkron dengan Firebase.
+        // ==============================================
+        relayRef.on("value", function(snapshot) {
+          var serverState = !!snapshot.val();
 
-          // Release lock after Firebase confirms the state
+          // Update state lokal dengan nilai dari server
+          relayStates[relay.path] = serverState;
+
+          // Update UI sesuai server (ini yang membuat real-time)
+          updateUI(relay.id, serverState);
+
+          // LEPAS LOCK - Firebase sudah konfirmasi
           relayLocks[relay.path] = false;
+
+          // Hapus safety timer karena sudah terkonfirmasi
+          if (lockTimers[relay.path]) {
+            clearTimeout(lockTimers[relay.path]);
+            lockTimers[relay.path] = null;
+          }
         });
 
-        activeListeners.push({ ref: relayRef, event: "value", listener });
+        listenerRefs.push(relayRef);
 
-        // -----------------------------------------------
-        // FIX 2: Toggle uses local state + direct set()
-        // No get() call = no delay = no race condition!
-        // -----------------------------------------------
-        toggleButton.onclick = () => {
-          // Prevent rapid clicks (debounce via lock)
-          if (relayLocks[relay.path]) {
-            console.log("Relay", relay.id, "is locked, ignoring click");
-            return;
-          }
+        // ==============================================
+        // PERBAIKAN 2: TOGGLE TANPA get()
+        //
+        // KODE LAMA (BUG):
+        //   relayRef.get().then(snap => {    <-- delay 200-500ms
+        //     relayRef.set(!snap.val());     <-- state sudah basi!
+        //   });
+        //
+        // KODE BARU (FIX):
+        //   1. Baca state dari relayStates (sudah di-track oleh listener)
+        //   2. Hitung newState = kebalikannya
+        //   3. Langsung set(newState) ke Firebase
+        //   4. UI langsung update (optimistic) tanpa delay
+        //   5. Lock aktif sampai Firebase konfirmasi via listener
+        // ==============================================
+        btnEl.onclick = function() {
+          // PERBAIKAN 3: LOCK - cegah klik ganda
+          if (relayLocks[relay.path]) return;
 
-          // Lock this relay to prevent double-click
+          // Aktifkan lock
           relayLocks[relay.path] = true;
 
-          // Calculate new state from tracked local state
-          const newState = !relayStates[relay.path];
+          // Hitung state baru dari state lokal (TANPA get()!)
+          var newState = !relayStates[relay.path];
 
-          // FIX 3: Optimistic UI - update immediately
+          // PERBAIKAN 4: OPTIMISTIC UI - langsung update tampilan
           relayStates[relay.path] = newState;
-          updateRelayUI(relay.id, newState);
+          updateUI(relay.id, newState);
 
-          // FIX 4: Direct set() - no get() round-trip!
-          relayRef.set(newState)
-            .catch((error) => {
-              console.error("Failed to set relay", relay.id, error);
-              // Revert optimistic update on error
-              relayStates[relay.path] = !newState;
-              updateRelayUI(relay.id, !newState);
-              relayLocks[relay.path] = false;
-            });
-          // Note: lock is released in the on("value") listener
-          // when Firebase confirms the new state
+          // PERBAIKAN 5: SAFETY TIMEOUT
+          // Jika dalam 5 detik listener belum melepas lock,
+          // lepas paksa agar tombol tidak stuck selamanya
+          lockTimers[relay.path] = setTimeout(function() {
+            relayLocks[relay.path] = false;
+            lockTimers[relay.path] = null;
+          }, 5000);
+
+          // LANGSUNG SET ke Firebase (tanpa get round-trip!)
+          relayRef.set(newState).catch(function(error) {
+            // Gagal -> revert ke state sebelumnya
+            var revertState = !newState;
+            relayStates[relay.path] = revertState;
+            updateUI(relay.id, revertState);
+            relayLocks[relay.path] = false;
+
+            if (lockTimers[relay.path]) {
+              clearTimeout(lockTimers[relay.path]);
+              lockTimers[relay.path] = null;
+            }
+          });
         };
       });
 
-      // -----------------------------------------------
-      // ALL OFF button
-      // -----------------------------------------------
-      document.getElementById("allOffBtn").onclick = () => {
-        // Optimistic: update all UI immediately
-        relays.forEach(relay => {
-          relayStates[relay.path] = false;
+      // ==============================================
+      // ALL OFF - matikan semua relay sekaligus
+      // ==============================================
+      document.getElementById("allOffBtn").onclick = function() {
+        var updates = {};
+        relays.forEach(function(relay) {
+          // Lock semua
           relayLocks[relay.path] = true;
-          updateRelayUI(relay.id, false);
-        });
 
-        // Send all off commands
-        const updates = {};
-        relays.forEach(relay => {
+          // Optimistic UI
+          relayStates[relay.path] = false;
+          updateUI(relay.id, false);
+
           updates["/" + relay.path] = false;
         });
-        db.ref().update(updates)
-          .catch((error) => {
-            console.error("Failed to turn all off", error);
-            // Locks will be released by listeners
-          });
+
+        // Kirim semua perubahan dalam 1 request (lebih cepat)
+        db.ref().update(updates).catch(function(error) {
+          // Lock akan dilepas oleh listener masing-masing
+        });
       };
     }
 
     // =============================================
-    // Logout Handler - Clean up listeners
+    // LOGOUT - bersihkan listener
     // =============================================
-    document.getElementById("logoutBtn").onclick = () => {
-      // Clean up all Firebase listeners
-      activeListeners.forEach(({ ref, event, listener }) => {
-        ref.off(event, listener);
+    document.getElementById("logoutBtn").onclick = function() {
+      // Matikan semua listener Firebase
+      listenerRefs.forEach(function(ref) {
+        ref.off();
       });
-      activeListeners.length = 0;
-      listenersInitialized = false;
+      listenerRefs.length = 0;
+      listenersActive = false;
 
-      // Reset states
-      Object.keys(relayStates).forEach(key => {
+      // Bersihkan semua timer
+      Object.keys(lockTimers).forEach(function(key) {
+        if (lockTimers[key]) {
+          clearTimeout(lockTimers[key]);
+          lockTimers[key] = null;
+        }
+      });
+
+      // Reset state
+      Object.keys(relayStates).forEach(function(key) {
         relayStates[key] = false;
-        relayLocks[key] = false;
+        relayLocks[key]  = false;
       });
 
       firebase.auth().signOut()
-        .then(() => {
+        .then(function() {
           dashboard.style.display = "none";
           loginForm.style.display = "block";
           document.getElementById("email").value = "";
           document.getElementById("password").value = "";
         })
-        .catch(error => {
+        .catch(function(error) {
           alert("Logout failed: " + error.message);
         });
     };
-
-    // =============================================
-    // Allow Enter key to submit login
-    // =============================================
-    document.getElementById("password").addEventListener("keypress", (e) => {
-      if (e.key === "Enter") loginBtn.click();
-    });
-    document.getElementById("email").addEventListener("keypress", (e) => {
-      if (e.key === "Enter") loginBtn.click();
-    });
   </script>
 </body>
 </html>
