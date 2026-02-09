@@ -45,17 +45,37 @@
     .login-card {
       background: white;
       padding: 40px;
-      border-radius: 12px;
-      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+      border-radius: 16px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
       width: 100%;
-      max-width: 400px;
+      max-width: 420px;
+      animation: slideUp 0.3s ease-out;
+    }
+
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
     .login-card h1 {
       text-align: center;
-      margin-bottom: 30px;
+      margin-bottom: 10px;
       color: #333;
-      font-size: 28px;
+      font-size: 32px;
+      font-weight: 700;
+    }
+
+    .login-card p {
+      text-align: center;
+      margin-bottom: 30px;
+      color: #888;
+      font-size: 14px;
     }
 
     .form-group {
@@ -66,58 +86,94 @@
       display: block;
       margin-bottom: 8px;
       color: #555;
-      font-weight: 500;
+      font-weight: 600;
       font-size: 14px;
     }
 
     .form-group input {
       width: 100%;
-      padding: 12px;
-      border: 1px solid #ddd;
-      border-radius: 6px;
+      padding: 14px;
+      border: 2px solid #e0e0e0;
+      border-radius: 8px;
       font-size: 14px;
-      transition: border-color 0.3s;
+      transition: all 0.3s;
+      background: #f9f9f9;
     }
 
     .form-group input:focus {
       outline: none;
       border-color: #667eea;
-      box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+      background: white;
+      box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+    }
+
+    .form-group input::placeholder {
+      color: #bbb;
     }
 
     .btn-login {
       width: 100%;
-      padding: 12px;
-      background: #667eea;
+      padding: 14px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
       color: white;
       border: none;
-      border-radius: 6px;
+      border-radius: 8px;
       font-size: 16px;
-      font-weight: 600;
+      font-weight: 700;
       cursor: pointer;
-      transition: background 0.3s;
+      transition: all 0.3s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 10px;
     }
 
-    .btn-login:hover {
-      background: #5568d3;
+    .btn-login:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
     }
 
     .btn-login:disabled {
-      opacity: 0.7;
+      opacity: 0.6;
       cursor: not-allowed;
+      transform: none;
     }
 
     .alert {
-      padding: 12px 16px;
-      border-radius: 6px;
-      margin-bottom: 15px;
+      padding: 14px 16px;
+      border-radius: 8px;
+      margin-bottom: 20px;
       font-size: 14px;
+      border-left: 4px solid;
     }
 
     .alert.error {
-      background: #fee2e2;
-      color: #991b1b;
-      border: 1px solid #fecaca;
+      background: #fee8e8;
+      color: #c33;
+      border-left-color: #ef4444;
+    }
+
+    .alert.success {
+      background: #e8f5e9;
+      color: #2e7d32;
+      border-left-color: #4ade80;
+    }
+
+    .password-toggle {
+      position: relative;
+    }
+
+    .toggle-btn {
+      position: absolute;
+      right: 12px;
+      top: 42px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: #667eea;
+      font-size: 18px;
+      padding: 4px;
     }
 
     /* ===== DASHBOARD ===== */
@@ -138,30 +194,37 @@
       padding: 20px;
       border-radius: 12px;
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      flex-wrap: wrap;
+      gap: 15px;
     }
 
     .header h1 {
       color: #333;
       font-size: 24px;
+      font-weight: 700;
     }
 
     .header-info {
       display: flex;
-      gap: 15px;
+      gap: 20px;
       align-items: center;
+      flex-wrap: wrap;
     }
 
     .connection-status {
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 10px;
       font-size: 14px;
       color: #666;
+      background: #f5f5f5;
+      padding: 8px 14px;
+      border-radius: 6px;
     }
 
     .status-dot {
-      width: 10px;
-      height: 10px;
+      width: 12px;
+      height: 12px;
       border-radius: 50%;
       background: #ef4444;
       animation: pulse 2s infinite;
@@ -170,6 +233,7 @@
     .status-dot.online {
       background: #4ade80;
       animation: none;
+      box-shadow: 0 0 6px #4ade80;
     }
 
     @keyframes pulse {
@@ -178,18 +242,21 @@
     }
 
     .btn-logout {
-      padding: 8px 16px;
+      padding: 10px 18px;
       background: #ef4444;
       color: white;
       border: none;
       border-radius: 6px;
       cursor: pointer;
       font-size: 14px;
-      transition: background 0.3s;
+      font-weight: 600;
+      transition: all 0.3s;
+      white-space: nowrap;
     }
 
     .btn-logout:hover {
       background: #dc2626;
+      transform: translateY(-1px);
     }
 
     /* ===== RELAY GRID ===== */
@@ -205,11 +272,32 @@
       border-radius: 12px;
       padding: 20px;
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-      transition: transform 0.3s, box-shadow 0.3s;
+      transition: all 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .relay-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: #ccc;
+      transition: background 0.3s;
+    }
+
+    .relay-card.on::before {
+      background: #4ade80;
+    }
+
+    .relay-card.off::before {
+      background: #ef4444;
     }
 
     .relay-card:hover {
-      transform: translateY(-2px);
+      transform: translateY(-4px);
       box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
     }
 
@@ -222,47 +310,49 @@
 
     .relay-title {
       font-size: 18px;
-      font-weight: 600;
+      font-weight: 700;
       color: #333;
     }
 
     .relay-status {
-      width: 12px;
-      height: 12px;
+      width: 14px;
+      height: 14px;
       border-radius: 50%;
       background: #ccc;
-      animation: none;
     }
 
     .relay-status.on {
       background: #4ade80;
-      box-shadow: 0 0 8px #4ade80;
-      animation: blink 1s infinite;
+      box-shadow: 0 0 10px #4ade80;
+      animation: pulse-on 1s infinite;
     }
 
     .relay-status.off {
       background: #ef4444;
-      box-shadow: 0 0 8px #ef4444;
+      box-shadow: 0 0 10px #ef4444;
     }
 
-    @keyframes blink {
+    @keyframes pulse-on {
       0%, 100% { opacity: 1; }
-      50% { opacity: 0.5; }
+      50% { opacity: 0.6; }
     }
 
     .relay-state {
-      font-size: 36px;
-      font-weight: bold;
-      margin: 15px 0;
+      font-size: 48px;
+      font-weight: 900;
+      margin: 18px 0;
       text-align: center;
+      transition: all 0.3s;
     }
 
     .relay-state.on {
       color: #4ade80;
+      text-shadow: 0 0 10px rgba(74, 222, 128, 0.3);
     }
 
     .relay-state.off {
       color: #ef4444;
+      text-shadow: 0 0 10px rgba(239, 68, 68, 0.3);
     }
 
     .btn-group {
@@ -273,13 +363,33 @@
 
     .btn-toggle {
       flex: 1;
-      padding: 10px;
+      padding: 12px;
       border: none;
       border-radius: 6px;
       cursor: pointer;
-      font-weight: 600;
+      font-weight: 700;
       font-size: 14px;
       transition: all 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn-toggle::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.3);
+      transform: translate(-50%, -50%);
+      transition: width 0.6s, height 0.6s;
+    }
+
+    .btn-toggle:active::before {
+      width: 300px;
+      height: 300px;
     }
 
     .btn-toggle:disabled {
@@ -294,6 +404,7 @@
 
     .btn-on:hover:not(:disabled) {
       background: #22c55e;
+      box-shadow: 0 4px 12px rgba(74, 222, 128, 0.3);
     }
 
     .btn-off {
@@ -303,23 +414,39 @@
 
     .btn-off:hover:not(:disabled) {
       background: #dc2626;
+      box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+    }
+
+    .loading-spinner {
+      display: inline-block;
+      width: 14px;
+      height: 14px;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      border-radius: 50%;
+      border-top-color: white;
+      animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
     }
 
     .schedule-btn {
       width: 100%;
-      padding: 10px;
+      padding: 12px;
       background: #667eea;
       color: white;
       border: none;
       border-radius: 6px;
       cursor: pointer;
       font-size: 14px;
-      font-weight: 600;
-      transition: background 0.3s;
+      font-weight: 700;
+      transition: all 0.3s;
     }
 
     .schedule-btn:hover {
       background: #5568d3;
+      box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
     }
 
     .schedule-indicator {
@@ -333,7 +460,7 @@
 
     .schedule-indicator.active {
       color: #667eea;
-      font-weight: 600;
+      font-weight: 700;
     }
 
     /* ===== MODAL ===== */
@@ -344,10 +471,16 @@
       left: 0;
       right: 0;
       bottom: 0;
-      background: rgba(0, 0, 0, 0.5);
+      background: rgba(0, 0, 0, 0.6);
       z-index: 999;
       align-items: center;
       justify-content: center;
+      animation: fadeIn 0.3s;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
     }
 
     .modal.active {
@@ -356,39 +489,42 @@
 
     .modal-content {
       background: white;
-      border-radius: 12px;
+      border-radius: 16px;
       padding: 30px;
       width: 100%;
-      max-width: 500px;
-      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+      max-width: 520px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
       max-height: 90vh;
       overflow-y: auto;
+      animation: slideUp 0.3s ease-out;
     }
 
     .modal-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 20px;
+      margin-bottom: 25px;
     }
 
     .modal-header h2 {
       color: #333;
-      font-size: 20px;
+      font-size: 22px;
+      font-weight: 700;
     }
 
     .btn-close {
       background: none;
       border: none;
-      font-size: 24px;
+      font-size: 28px;
       cursor: pointer;
       color: #888;
       padding: 0;
-      width: 30px;
-      height: 30px;
+      width: 36px;
+      height: 36px;
       display: flex;
       align-items: center;
       justify-content: center;
+      transition: color 0.3s;
     }
 
     .btn-close:hover {
@@ -400,12 +536,13 @@
     }
 
     .form-section h3 {
-      font-size: 14px;
-      font-weight: 600;
+      font-size: 13px;
+      font-weight: 700;
       color: #333;
       margin-bottom: 12px;
       text-transform: uppercase;
-      letter-spacing: 0.5px;
+      letter-spacing: 0.8px;
+      color: #667eea;
     }
 
     .time-input-group {
@@ -416,30 +553,38 @@
 
     .time-input-group input {
       width: 70px;
-      padding: 8px;
-      border: 1px solid #ddd;
+      padding: 10px;
+      border: 2px solid #e0e0e0;
       border-radius: 6px;
       font-size: 14px;
       text-align: center;
+      font-weight: 600;
+      transition: border-color 0.3s;
+    }
+
+    .time-input-group input:focus {
+      outline: none;
+      border-color: #667eea;
     }
 
     .time-input-group span {
       color: #888;
-      font-weight: 500;
+      font-weight: 600;
+      font-size: 18px;
     }
 
     .toggle-switch {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 14px;
     }
 
     .switch {
       position: relative;
-      width: 50px;
-      height: 26px;
-      background: #ccc;
-      border-radius: 13px;
+      width: 54px;
+      height: 30px;
+      background: #e0e0e0;
+      border-radius: 15px;
       cursor: pointer;
       transition: background 0.3s;
     }
@@ -451,13 +596,14 @@
     .switch::after {
       content: '';
       position: absolute;
-      width: 22px;
-      height: 22px;
+      width: 26px;
+      height: 26px;
       background: white;
       border-radius: 50%;
       top: 2px;
       left: 2px;
       transition: left 0.3s;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
     }
 
     .switch.active::after {
@@ -466,7 +612,7 @@
 
     .checkbox-group {
       display: flex;
-      gap: 15px;
+      gap: 12px;
       flex-wrap: wrap;
     }
 
@@ -475,64 +621,82 @@
       align-items: center;
       gap: 8px;
       cursor: pointer;
+      padding: 8px 12px;
+      background: #f5f5f5;
+      border-radius: 6px;
+      transition: all 0.3s;
+    }
+
+    .checkbox-item:hover {
+      background: #eee;
     }
 
     .checkbox-item input {
       cursor: pointer;
+      width: 16px;
+      height: 16px;
+      accent-color: #667eea;
     }
 
     .radio-group {
       display: flex;
       gap: 15px;
+      flex-direction: column;
     }
 
     .radio-item {
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 10px;
       cursor: pointer;
     }
 
     .radio-item input {
       cursor: pointer;
+      width: 18px;
+      height: 18px;
+      accent-color: #667eea;
     }
 
     .btn-save {
       width: 100%;
-      padding: 12px;
-      background: #667eea;
+      padding: 14px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
       color: white;
       border: none;
-      border-radius: 6px;
-      font-weight: 600;
+      border-radius: 8px;
+      font-weight: 700;
       cursor: pointer;
-      transition: background 0.3s;
+      transition: all 0.3s;
+      margin-top: 20px;
     }
 
     .btn-save:hover {
-      background: #5568d3;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
     }
 
     .btn-save:disabled {
-      opacity: 0.7;
+      opacity: 0.6;
       cursor: not-allowed;
     }
 
     .btn-delete {
       width: 100%;
-      padding: 12px;
-      background: #ef4444;
-      color: white;
-      border: none;
-      border-radius: 6px;
-      font-weight: 600;
+      padding: 14px;
+      background: #fee8e8;
+      color: #c33;
+      border: 2px solid #f5a0a0;
+      border-radius: 8px;
+      font-weight: 700;
       cursor: pointer;
       margin-top: 10px;
-      transition: background 0.3s;
+      transition: all 0.3s;
     }
 
     .btn-delete:hover {
-      background: #dc2626;
+      background: #f5a0a0;
+      color: white;
     }
 
     /* ===== CONTROL BAR ===== */
@@ -542,17 +706,17 @@
       border-radius: 12px;
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
       display: flex;
-      gap: 10px;
+      gap: 12px;
       flex-wrap: wrap;
       margin-bottom: 30px;
     }
 
     .btn-control {
-      padding: 10px 20px;
+      padding: 12px 24px;
       border: none;
-      border-radius: 6px;
+      border-radius: 8px;
       cursor: pointer;
-      font-weight: 600;
+      font-weight: 700;
       font-size: 14px;
       transition: all 0.3s;
     }
@@ -564,6 +728,7 @@
 
     .btn-all-on:hover {
       background: #22c55e;
+      box-shadow: 0 4px 12px rgba(74, 222, 128, 0.3);
     }
 
     .btn-all-off {
@@ -573,6 +738,7 @@
 
     .btn-all-off:hover {
       background: #dc2626;
+      box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
     }
 
     /* ===== RESPONSIVE ===== */
@@ -586,6 +752,7 @@
       .header-info {
         flex-direction: column;
         width: 100%;
+        justify-content: center;
       }
 
       .btn-logout {
@@ -599,6 +766,7 @@
       .modal-content {
         margin: 20px;
         max-height: 80vh;
+        border-radius: 12px;
       }
 
       .control-bar {
@@ -608,20 +776,10 @@
       .btn-control {
         width: 100%;
       }
-    }
 
-    .loading {
-      display: inline-block;
-      width: 12px;
-      height: 12px;
-      border: 2px solid rgba(255, 255, 255, 0.3);
-      border-radius: 50%;
-      border-top-color: white;
-      animation: spin 0.8s linear infinite;
-    }
-
-    @keyframes spin {
-      to { transform: rotate(360deg); }
+      .login-card {
+        margin: 20px;
+      }
     }
   </style>
 </head>
@@ -629,17 +787,36 @@
   <!-- LOGIN PAGE -->
   <div class="login-page" id="loginPage">
     <div class="login-card">
-      <h1>Smart Relay</h1>
+      <h1>🔐 Smart Relay</h1>
+      <p>Control Your Devices Remotely</p>
       <div id="errorAlert"></div>
+      
       <div class="form-group">
-        <label for="email">Email</label>
-        <input type="email" id="email" placeholder="fazz@gmail.com" />
+        <label for="email">📧 Email Address</label>
+        <input 
+          type="email" 
+          id="email" 
+          placeholder="fazz@gmail.com"
+          autocomplete="email"
+        />
       </div>
-      <div class="form-group">
-        <label for="password">Password</label>
-        <input type="password" id="password" placeholder="100100" />
+
+      <div class="form-group password-toggle">
+        <label for="password">🔒 Password</label>
+        <input 
+          type="password" 
+          id="password" 
+          placeholder="••••••••"
+          autocomplete="current-password"
+        />
+        <button type="button" class="toggle-btn" id="togglePassword" title="Show/Hide Password">
+          👁️
+        </button>
       </div>
-      <button class="btn-login" id="loginBtn">Login</button>
+
+      <button class="btn-login" id="loginBtn">
+        <span id="loginText">Login</span>
+      </button>
     </div>
   </div>
 
@@ -649,7 +826,7 @@
       <!-- HEADER -->
       <div class="header">
         <div>
-          <h1>Smart Relay Control</h1>
+          <h1>⚡ Smart Relay Control</h1>
         </div>
         <div class="header-info">
           <div class="connection-status">
@@ -662,8 +839,8 @@
 
       <!-- CONTROL BAR -->
       <div class="control-bar">
-        <button class="btn-control btn-all-on" id="allOnBtn">All ON</button>
-        <button class="btn-control btn-all-off" id="allOffBtn">All OFF</button>
+        <button class="btn-control btn-all-on" id="allOnBtn">✓ All ON</button>
+        <button class="btn-control btn-all-off" id="allOffBtn">✗ All OFF</button>
       </div>
 
       <!-- RELAY GRID -->
@@ -677,7 +854,7 @@
   <div class="modal" id="scheduleModal">
     <div class="modal-content">
       <div class="modal-header">
-        <h2 id="modalTitle">Schedule Relay 1</h2>
+        <h2 id="modalTitle">⏰ Schedule Relay 1</h2>
         <button class="btn-close" id="modalClose">×</button>
       </div>
 
@@ -685,7 +862,7 @@
 
       <!-- ENABLE SCHEDULE -->
       <div class="form-section">
-        <h3>Enable Schedule</h3>
+        <h3>📅 Enable Schedule</h3>
         <div class="toggle-switch">
           <div class="switch" id="scheduleSwitch"></div>
           <span id="scheduleStatus">Disabled</span>
@@ -694,9 +871,9 @@
 
       <!-- TIME RANGE -->
       <div class="form-section">
-        <h3>Time Range</h3>
+        <h3>⏱️ Time Range</h3>
         <div style="margin-bottom: 15px;">
-          <label style="display: block; margin-bottom: 8px; color: #666; font-size: 14px;">Start Time</label>
+          <label style="display: block; margin-bottom: 8px; color: #666; font-size: 14px; font-weight: 600;">Start Time</label>
           <div class="time-input-group">
             <input type="number" id="startHour" min="0" max="23" placeholder="00" />
             <span>:</span>
@@ -704,7 +881,7 @@
           </div>
         </div>
         <div>
-          <label style="display: block; margin-bottom: 8px; color: #666; font-size: 14px;">End Time</label>
+          <label style="display: block; margin-bottom: 8px; color: #666; font-size: 14px; font-weight: 600;">End Time</label>
           <div class="time-input-group">
             <input type="number" id="endHour" min="0" max="23" placeholder="00" />
             <span>:</span>
@@ -715,7 +892,7 @@
 
       <!-- SCHEDULE DAYS -->
       <div class="form-section">
-        <h3>Active Days</h3>
+        <h3>📆 Active Days</h3>
         <div class="checkbox-group">
           <label class="checkbox-item">
             <input type="checkbox" value="monday" class="day-checkbox" /> Mon
@@ -743,7 +920,7 @@
 
       <!-- MODE -->
       <div class="form-section">
-        <h3>Action</h3>
+        <h3>⚙️ Action</h3>
         <div class="radio-group">
           <label class="radio-item">
             <input type="radio" name="mode" value="true" checked />
@@ -780,13 +957,14 @@
 
     firebase.initializeApp(firebaseConfig);
 
-    // ===== HARDCODED CREDENTIALS =====
+    // ===== SECURITY: Hardcoded credentials (untuk production gunakan proper auth) =====
     const ALLOWED_EMAIL = "fazz@gmail.com";
     const ALLOWED_PASSWORD = "100100";
 
     // ===== STATE =====
     const relayStates = { 1: false, 2: false, 3: false, 4: false };
     const scheduleData = { 1: {}, 2: {}, 3: {}, 4: {} };
+    const relayLoading = { 1: false, 2: false, 3: false, 4: false };
     let currentEditingRelay = null;
     let isLoggedIn = false;
 
@@ -801,19 +979,43 @@
     const allOnBtn = document.getElementById("allOnBtn");
     const allOffBtn = document.getElementById("allOffBtn");
 
-    // ===== LOGIN =====
-    loginBtn.addEventListener("click", () => {
+    // ===== PASSWORD TOGGLE =====
+    document.getElementById("togglePassword").addEventListener("click", function() {
+      const passwordInput = document.getElementById("password");
+      const type = passwordInput.type === "password" ? "text" : "password";
+      passwordInput.type = type;
+      this.textContent = type === "password" ? "👁️" : "🙈";
+    });
+
+    // ===== LOGIN HANDLER =====
+    loginBtn.addEventListener("click", handleLogin);
+
+    document.getElementById("email").addEventListener("keypress", (e) => {
+      if (e.key === "Enter") handleLogin();
+    });
+
+    document.getElementById("password").addEventListener("keypress", (e) => {
+      if (e.key === "Enter") handleLogin();
+    });
+
+    function handleLogin() {
       const email = document.getElementById("email").value.trim();
       const password = document.getElementById("password").value;
       const errorAlert = document.getElementById("errorAlert");
+      const loginBtn = document.getElementById("loginBtn");
 
       if (!email || !password) {
-        showError(errorAlert, "Please enter email and password");
+        showError(errorAlert, "⚠️ Please enter email and password");
+        return;
+      }
+
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        showError(errorAlert, "⚠️ Please enter a valid email");
         return;
       }
 
       if (email !== ALLOWED_EMAIL || password !== ALLOWED_PASSWORD) {
-        showError(errorAlert, "Invalid email or password");
+        showError(errorAlert, "❌ Invalid email or password");
         return;
       }
 
@@ -823,18 +1025,17 @@
       dashboard.classList.add("active");
       isLoggedIn = true;
       initDashboard();
-    });
-
-    document.getElementById("email").addEventListener("keypress", (e) => {
-      if (e.key === "Enter") loginBtn.click();
-    });
-
-    document.getElementById("password").addEventListener("keypress", (e) => {
-      if (e.key === "Enter") loginBtn.click();
-    });
+    }
 
     function showError(container, message) {
       container.innerHTML = `<div class="alert error">${message}</div>`;
+    }
+
+    function showSuccess(container, message) {
+      container.innerHTML = `<div class="alert success">${message}</div>`;
+      setTimeout(() => {
+        container.innerHTML = "";
+      }, 3000);
     }
 
     // ===== INIT DASHBOARD =====
@@ -851,10 +1052,10 @@
         const statusText = document.getElementById("statusText");
         if (snap.val()) {
           statusDot.classList.add("online");
-          statusText.textContent = "Connected";
+          statusText.textContent = "✓ Connected";
         } else {
           statusDot.classList.remove("online");
-          statusText.textContent = "Disconnected";
+          statusText.textContent = "✗ Disconnected";
         }
       });
 
@@ -867,260 +1068,231 @@
 
         // Load schedules
         firebase.database().ref(`/schedule${i}`).on("value", (snap) => {
-          scheduleData[i] = snap.val() || {};
+          if (snap.exists()) {
+            scheduleData[i] = snap.val();
+          } else {
+            scheduleData[i] = {
+              enabled: false,
+              startTime: "06:00",
+              endTime: "22:00",
+              days: []
+            };
+          }
           updateScheduleIndicator(i);
         });
       }
-
-      // Control bar
-      allOnBtn.addEventListener("click", () => {
-        for (let i = 1; i <= 4; i++) {
-          firebase.database().ref(`/relay${i}`).set(true).catch(err => {
-            console.error("Error setting relay" + i, err);
-          });
-        }
-      });
-
-      allOffBtn.addEventListener("click", () => {
-        for (let i = 1; i <= 4; i++) {
-          firebase.database().ref(`/relay${i}`).set(false).catch(err => {
-            console.error("Error setting relay" + i, err);
-          });
-        }
-      });
-
-      // Modal controls
-      modalClose.addEventListener("click", closeScheduleModal);
-      scheduleModal.addEventListener("click", (e) => {
-        if (e.target === scheduleModal) closeScheduleModal();
-      });
-
-      document.getElementById("scheduleSwitch").addEventListener("click", toggleScheduleSwitch);
-      document.getElementById("saveSched").addEventListener("click", saveSchedule);
-      document.getElementById("deleteSched").addEventListener("click", deleteSchedule);
-
-      // Logout
-      logoutBtn.addEventListener("click", () => {
-        isLoggedIn = false;
-        loginPage.classList.remove("hidden");
-        dashboard.classList.remove("active");
-        relayGrid.innerHTML = "";
-        document.getElementById("email").value = "";
-        document.getElementById("password").value = "";
-        document.getElementById("errorAlert").innerHTML = "";
-      });
     }
 
     // ===== CREATE RELAY CARD =====
     function createRelayCard(relayNum) {
       const card = document.createElement("div");
-      card.className = "relay-card";
+      card.className = `relay-card ${relayStates[relayNum] ? "on" : "off"}`;
+      card.id = `relay-${relayNum}`;
+
       card.innerHTML = `
         <div class="relay-header">
-          <h3 class="relay-title">Relay ${relayNum}</h3>
-          <div class="relay-status"></div>
+          <div class="relay-title">⚡ Relay ${relayNum}</div>
+          <div class="relay-status ${relayStates[relayNum] ? "on" : "off"}"></div>
         </div>
-        <div class="relay-state">OFF</div>
+
+        <div class="relay-state ${relayStates[relayNum] ? "on" : "off"}" id="state-${relayNum}">
+          ${relayStates[relayNum] ? "ON" : "OFF"}
+        </div>
+
         <div class="btn-group">
-          <button class="btn-toggle btn-on" data-relay="${relayNum}" data-action="true">ON</button>
-          <button class="btn-toggle btn-off" data-relay="${relayNum}" data-action="false">OFF</button>
+          <button class="btn-toggle btn-on" id="btn-on-${relayNum}" data-relay="${relayNum}">
+            ✓ ON
+          </button>
+          <button class="btn-toggle btn-off" id="btn-off-${relayNum}" data-relay="${relayNum}">
+            ✗ OFF
+          </button>
         </div>
-        <button class="schedule-btn" data-relay="${relayNum}">Schedule</button>
-        <div class="schedule-indicator"></div>
+
+        <button class="schedule-btn" id="sched-${relayNum}" data-relay="${relayNum}">
+          ⏰ Schedule
+        </button>
+
+        <div class="schedule-indicator" id="indicator-${relayNum}"></div>
       `;
 
       // Button handlers
-      const onBtn = card.querySelector('[data-action="true"]');
-      const offBtn = card.querySelector('[data-action="false"]');
-      const schedBtn = card.querySelector(".schedule-btn");
-
-      onBtn.addEventListener("click", (e) => {
-        e.preventDefault();
-        toggleRelay(relayNum, true);
-      });
-
-      offBtn.addEventListener("click", (e) => {
-        e.preventDefault();
-        toggleRelay(relayNum, false);
-      });
-
-      schedBtn.addEventListener("click", () => openScheduleModal(relayNum));
+      card.querySelector(`#btn-on-${relayNum}`).addEventListener("click", () => toggleRelay(relayNum, true));
+      card.querySelector(`#btn-off-${relayNum}`).addEventListener("click", () => toggleRelay(relayNum, false));
+      card.querySelector(`#sched-${relayNum}`).addEventListener("click", () => openScheduleModal(relayNum));
 
       return card;
     }
 
     // ===== TOGGLE RELAY =====
     function toggleRelay(relayNum, state) {
-      firebase.database().ref(`/relay${relayNum}`).set(state).catch(err => {
-        console.error(`Error setting relay${relayNum}:`, err);
-      });
+      relayLoading[relayNum] = true;
+      updateRelayCard(relayNum);
+
+      firebase.database().ref(`/relay${relayNum}`).set(state)
+        .then(() => {
+          relayLoading[relayNum] = false;
+          updateRelayCard(relayNum);
+        })
+        .catch((error) => {
+          console.error("Error updating relay:", error);
+          relayLoading[relayNum] = false;
+          updateRelayCard(relayNum);
+          showError(document.getElementById("errorAlert"), "❌ Failed to update relay");
+        });
     }
 
     // ===== UPDATE RELAY CARD =====
     function updateRelayCard(relayNum) {
-      const cards = document.querySelectorAll(".relay-card");
-      const card = Array.from(cards).find(c => 
-        c.querySelector('[data-relay="' + relayNum + '"]')
-      );
+      const card = document.getElementById(`relay-${relayNum}`);
+      const state = relayStates[relayNum];
+      const isLoading = relayLoading[relayNum];
 
       if (!card) return;
 
-      const state = relayStates[relayNum];
-      const statusDot = card.querySelector(".relay-status");
-      const stateText = card.querySelector(".relay-state");
+      card.className = `relay-card ${state ? "on" : "off"}`;
 
-      if (state) {
-        statusDot.classList.add("on");
-        statusDot.classList.remove("off");
-        stateText.textContent = "ON";
-        stateText.classList.add("on");
-        stateText.classList.remove("off");
+      const stateDiv = card.querySelector(`#state-${relayNum}`);
+      stateDiv.className = `relay-state ${state ? "on" : "off"}`;
+      stateDiv.textContent = isLoading ? "..." : (state ? "ON" : "OFF");
+
+      const statusDot = card.querySelector(".relay-status");
+      statusDot.className = `relay-status ${state ? "on" : "off"}`;
+
+      const btnOn = card.querySelector(`#btn-on-${relayNum}`);
+      const btnOff = card.querySelector(`#btn-off-${relayNum}`);
+      btnOn.disabled = isLoading || state;
+      btnOff.disabled = isLoading || !state;
+    }
+
+    // ===== UPDATE SCHEDULE INDICATOR =====
+    function updateScheduleIndicator(relayNum) {
+      const indicator = document.getElementById(`indicator-${relayNum}`);
+      const schedule = scheduleData[relayNum];
+
+      if (schedule && schedule.enabled) {
+        indicator.className = "schedule-indicator active";
+        indicator.textContent = `⏲️ ${schedule.startTime} - ${schedule.endTime}`;
       } else {
-        statusDot.classList.add("off");
-        statusDot.classList.remove("on");
-        stateText.textContent = "OFF";
-        stateText.classList.add("off");
-        stateText.classList.remove("on");
+        indicator.className = "schedule-indicator";
+        indicator.textContent = "No schedule";
       }
     }
 
-    // ===== SCHEDULE MODAL =====
+    // ===== OPEN SCHEDULE MODAL =====
     function openScheduleModal(relayNum) {
       currentEditingRelay = relayNum;
-      document.getElementById("modalTitle").textContent = `Schedule Relay ${relayNum}`;
-      const schedule = scheduleData[relayNum] || {};
+      const schedule = scheduleData[relayNum];
+
+      document.getElementById("modalTitle").textContent = `⏰ Schedule Relay ${relayNum}`;
 
       // Reset form
-      document.getElementById("startHour").value = schedule.startHour || "00";
-      document.getElementById("startMinute").value = schedule.startMinute || "00";
-      document.getElementById("endHour").value = schedule.endHour || "00";
-      document.getElementById("endMinute").value = schedule.endMinute || "00";
+      const scheduleSwitch = document.getElementById("scheduleSwitch");
+      scheduleSwitch.classList.toggle("active", schedule.enabled);
+      document.getElementById("scheduleStatus").textContent = schedule.enabled ? "Enabled" : "Disabled";
+
+      document.getElementById("startHour").value = schedule.startTime?.substring(0, 2) || "06";
+      document.getElementById("startMinute").value = schedule.startTime?.substring(3, 5) || "00";
+      document.getElementById("endHour").value = schedule.endTime?.substring(0, 2) || "22";
+      document.getElementById("endMinute").value = schedule.endTime?.substring(3, 5) || "00";
+
+      // Set day checkboxes
+      const dayMap = { 1: "monday", 2: "tuesday", 3: "wednesday", 4: "thursday", 5: "friday", 6: "saturday", 0: "sunday" };
+      document.querySelectorAll(".day-checkbox").forEach(cb => cb.checked = false);
+      if (schedule.days) {
+        schedule.days.forEach(day => {
+          const dayName = dayMap[day];
+          document.querySelector(`.day-checkbox[value="${dayName}"]`).checked = true;
+        });
+      }
 
       // Set mode radio
-      const mode = schedule.mode !== undefined ? String(schedule.mode) : "true";
-      document.querySelectorAll('input[name="mode"]').forEach(r => {
-        r.checked = r.value === mode;
-      });
-
-      // Set days checkboxes
-      const activeDays = schedule.activeDays || [];
-      document.querySelectorAll(".day-checkbox").forEach(cb => {
-        cb.checked = activeDays.includes(cb.value);
-      });
-
-      // Set schedule switch
-      const scheduleSwitch = document.getElementById("scheduleSwitch");
-      const scheduleStatus = document.getElementById("scheduleStatus");
-      const isEnabled = schedule.enabled === true;
-      
-      if (isEnabled) {
-        scheduleSwitch.classList.add("active");
-        scheduleStatus.textContent = "Enabled";
-      } else {
-        scheduleSwitch.classList.remove("active");
-        scheduleStatus.textContent = "Disabled";
-      }
+      const modeValue = schedule.mode !== undefined ? schedule.mode : "true";
+      document.querySelector(`input[name="mode"][value="${modeValue}"]`).checked = true;
 
       scheduleModal.classList.add("active");
     }
 
-    function closeScheduleModal() {
-      scheduleModal.classList.remove("active");
-      currentEditingRelay = null;
-    }
+    // ===== SCHEDULE MODAL HANDLERS =====
+    document.getElementById("scheduleSwitch").addEventListener("click", function() {
+      this.classList.toggle("active");
+      document.getElementById("scheduleStatus").textContent = this.classList.contains("active") ? "Enabled" : "Disabled";
+    });
 
-    function toggleScheduleSwitch() {
-      const scheduleSwitch = document.getElementById("scheduleSwitch");
-      const scheduleStatus = document.getElementById("scheduleStatus");
-      
-      scheduleSwitch.classList.toggle("active");
-      if (scheduleSwitch.classList.contains("active")) {
-        scheduleStatus.textContent = "Enabled";
-      } else {
-        scheduleStatus.textContent = "Disabled";
-      }
-    }
+    modalClose.addEventListener("click", () => {
+      scheduleModal.classList.remove("active");
+    });
+
+    document.getElementById("saveSched").addEventListener("click", saveSchedule);
 
     function saveSchedule() {
-      if (!currentEditingRelay) return;
+      const enabled = document.getElementById("scheduleSwitch").classList.contains("active");
+      const startHour = String(document.getElementById("startHour").value).padStart(2, "0");
+      const startMinute = String(document.getElementById("startMinute").value).padStart(2, "0");
+      const endHour = String(document.getElementById("endHour").value).padStart(2, "0");
+      const endMinute = String(document.getElementById("endMinute").value).padStart(2, "0");
 
-      const scheduleSwitch = document.getElementById("scheduleSwitch");
-      const enabled = scheduleSwitch.classList.contains("active");
-      const startHour = parseInt(document.getElementById("startHour").value) || 0;
-      const startMinute = parseInt(document.getElementById("startMinute").value) || 0;
-      const endHour = parseInt(document.getElementById("endHour").value) || 0;
-      const endMinute = parseInt(document.getElementById("endMinute").value) || 0;
-      const mode = document.querySelector('input[name="mode"]:checked').value === "true";
-      
+      const dayMap = { "monday": 1, "tuesday": 2, "wednesday": 3, "thursday": 4, "friday": 5, "saturday": 6, "sunday": 0 };
       const activeDays = [];
       document.querySelectorAll(".day-checkbox:checked").forEach(cb => {
-        activeDays.push(cb.value);
+        activeDays.push(dayMap[cb.value]);
       });
 
+      const mode = document.querySelector('input[name="mode"]:checked').value === "true";
+
       const schedule = {
-        enabled,
-        startHour,
-        startMinute,
-        endHour,
-        endMinute,
-        mode,
-        activeDays
+        enabled: enabled,
+        startTime: `${startHour}:${startMinute}`,
+        endTime: `${endHour}:${endMinute}`,
+        days: activeDays,
+        mode: mode
       };
 
       firebase.database().ref(`/schedule${currentEditingRelay}`).set(schedule)
         .then(() => {
-          showAlert("Schedule saved successfully!");
-          closeScheduleModal();
+          scheduleModal.classList.remove("active");
+          showSuccess(document.getElementById("alertContainer"), "✓ Schedule saved successfully");
         })
-        .catch(err => {
-          showAlert("Error saving schedule: " + err.message, true);
+        .catch((error) => {
+          console.error("Error saving schedule:", error);
+          showError(document.getElementById("alertContainer"), "❌ Failed to save schedule");
         });
     }
 
-    function deleteSchedule() {
-      if (!currentEditingRelay) return;
-
+    document.getElementById("deleteSched").addEventListener("click", () => {
       firebase.database().ref(`/schedule${currentEditingRelay}`).remove()
         .then(() => {
-          showAlert("Schedule deleted successfully!");
-          closeScheduleModal();
+          scheduleModal.classList.remove("active");
+          showSuccess(document.getElementById("alertContainer"), "✓ Schedule deleted");
         })
-        .catch(err => {
-          showAlert("Error deleting schedule: " + err.message, true);
+        .catch((error) => {
+          console.error("Error deleting schedule:", error);
+          showError(document.getElementById("alertContainer"), "❌ Failed to delete schedule");
         });
-    }
+    });
 
-    function updateScheduleIndicator(relayNum) {
-      const cards = document.querySelectorAll(".relay-card");
-      const card = Array.from(cards).find(c => 
-        c.querySelector('[data-relay="' + relayNum + '"]')
-      );
-
-      if (!card) return;
-
-      const indicator = card.querySelector(".schedule-indicator");
-      const schedule = scheduleData[relayNum];
-
-      if (schedule && schedule.enabled) {
-        const start = `${String(schedule.startHour).padStart(2, '0')}:${String(schedule.startMinute).padStart(2, '0')}`;
-        const end = `${String(schedule.endHour).padStart(2, '0')}:${String(schedule.endMinute).padStart(2, '0')}`;
-        const action = schedule.mode ? "ON" : "OFF";
-        indicator.textContent = `📅 ${start}-${end} ${action}`;
-        indicator.classList.add("active");
-      } else {
-        indicator.textContent = "No schedule";
-        indicator.classList.remove("active");
+    // ===== ALL ON / ALL OFF =====
+    allOnBtn.addEventListener("click", () => {
+      for (let i = 1; i <= 4; i++) {
+        toggleRelay(i, true);
       }
-    }
+    });
 
-    function showAlert(message, isError = false) {
-      const container = document.getElementById("alertContainer");
-      const className = isError ? "alert error" : "alert success";
-      container.innerHTML = `<div class="${className}">${message}</div>`;
-      setTimeout(() => {
-        container.innerHTML = "";
-      }, 3000);
-    }
+    allOffBtn.addEventListener("click", () => {
+      for (let i = 1; i <= 4; i++) {
+        toggleRelay(i, false);
+      }
+    });
+
+    // ===== LOGOUT =====
+    logoutBtn.addEventListener("click", () => {
+      isLoggedIn = false;
+      loginPage.classList.remove("hidden");
+      dashboard.classList.remove("active");
+      relayGrid.innerHTML = "";
+      document.getElementById("email").value = "";
+      document.getElementById("password").value = "";
+      document.getElementById("errorAlert").innerHTML = "";
+    });
   </script>
 </body>
 </html>
