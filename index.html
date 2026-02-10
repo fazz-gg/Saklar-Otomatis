@@ -1293,6 +1293,52 @@
       document.getElementById("password").value = "";
       document.getElementById("errorAlert").innerHTML = "";
     });
+
+    // ===== SCHEDULE EVALUATION =====
+    // Check and apply schedule every 5 seconds
+    setInterval(() => {
+      const now = new Date();
+      const currentHour = now.getHours();
+      const currentMinute = now.getMinutes();
+      const currentDay = now.getDay();  // 0=Sun, 1=Mon, etc
+      
+      for (let i = 1; i <= 4; i++) {
+        if (!scheduleData[i] || !scheduleData[i].enabled) continue;
+        
+        const sched = scheduleData[i];
+        
+        // Check if today is active (days is boolean array or includes check)
+        let isActiveToday = false;
+        if (Array.isArray(sched.days)) {
+          isActiveToday = sched.days[currentDay] === true;
+        } else if (sched.days instanceof Object) {
+          isActiveToday = Object.values(sched.days).includes(currentDay);
+        }
+        if (!isActiveToday) continue;
+        
+        // Check if current time is in range
+        const currentTime = currentHour * 60 + currentMinute;
+        const startTime = (sched.startHour || 0) * 60 + (sched.startMinute || 0);
+        const endTime = (sched.endHour || 0) * 60 + (sched.endMinute || 0);
+        
+        let isInRange = false;
+        if (startTime < endTime) {
+          isInRange = currentTime >= startTime && currentTime <= endTime;
+        } else if (startTime > endTime) {
+          isInRange = currentTime >= startTime || currentTime <= endTime;
+        }
+        
+        // Apply schedule logic
+        const shouldBeOn = sched.mode ? isInRange : !isInRange;
+        
+        // Update relay state if needed
+        if (shouldBeOn && !relayStates[i]) {
+          firebase.database().ref(`/relay${i}`).set(true);
+        } else if (!shouldBeOn && relayStates[i]) {
+          firebase.database().ref(`/relay${i}`).set(false);
+        }
+      }
+    }, 5000);
   </script>
 </body>
 </html>
