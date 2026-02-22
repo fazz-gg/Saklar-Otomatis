@@ -211,6 +211,132 @@
       flex-wrap: wrap;
     }
 
+    /* ===== DIGITAL CLOCK ===== */
+    .digital-clock {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      padding: 10px 18px;
+      border-radius: 8px;
+      color: white;
+      font-weight: 700;
+      font-size: 15px;
+      letter-spacing: 1px;
+      box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+    }
+
+    .clock-time {
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 20px;
+      font-weight: 900;
+      letter-spacing: 2px;
+    }
+
+    .clock-date {
+      font-size: 11px;
+      font-weight: 500;
+      opacity: 0.85;
+    }
+
+    .clock-separator {
+      width: 1px;
+      height: 28px;
+      background: rgba(255,255,255,0.3);
+    }
+
+    /* ===== BATTERY VOLTAGE WIDGET ===== */
+    .battery-widget {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: #f8fafc;
+      padding: 10px 16px;
+      border-radius: 8px;
+      border: 2px solid #e2e8f0;
+      min-width: 170px;
+    }
+
+    .battery-icon-wrapper {
+      position: relative;
+      width: 40px;
+      height: 22px;
+    }
+
+    .battery-outline {
+      width: 36px;
+      height: 20px;
+      border: 2px solid #94a3b8;
+      border-radius: 3px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .battery-outline::after {
+      content: '';
+      position: absolute;
+      right: -6px;
+      top: 4px;
+      width: 4px;
+      height: 10px;
+      background: #94a3b8;
+      border-radius: 0 2px 2px 0;
+    }
+
+    .battery-fill {
+      height: 100%;
+      width: 0%;
+      transition: width 0.5s ease, background 0.5s ease;
+      border-radius: 1px;
+    }
+
+    .battery-fill.high {
+      background: linear-gradient(90deg, #4ade80, #22c55e);
+    }
+
+    .battery-fill.medium {
+      background: linear-gradient(90deg, #facc15, #eab308);
+    }
+
+    .battery-fill.low {
+      background: linear-gradient(90deg, #f97316, #ea580c);
+    }
+
+    .battery-fill.critical {
+      background: linear-gradient(90deg, #ef4444, #dc2626);
+      animation: blink-battery 1s infinite;
+    }
+
+    @keyframes blink-battery {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+
+    .battery-info {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.3;
+    }
+
+    .battery-voltage {
+      font-size: 16px;
+      font-weight: 800;
+      color: #1e293b;
+      font-family: 'Courier New', Courier, monospace;
+      letter-spacing: 0.5px;
+    }
+
+    .battery-percent {
+      font-size: 11px;
+      font-weight: 600;
+      color: #64748b;
+    }
+
+    .battery-percent.high { color: #22c55e; }
+    .battery-percent.medium { color: #eab308; }
+    .battery-percent.low { color: #ea580c; }
+    .battery-percent.critical { color: #dc2626; }
+
     .connection-status {
       display: flex;
       align-items: center;
@@ -450,17 +576,38 @@
     }
 
     .schedule-indicator {
-      font-size: 12px;
+      font-size: 11px;
       color: #888;
       margin-top: 10px;
       padding-top: 10px;
       border-top: 1px solid #eee;
       text-align: center;
+      line-height: 1.6;
     }
 
     .schedule-indicator.active {
       color: #667eea;
       font-weight: 700;
+    }
+
+    .schedule-line {
+      display: block;
+    }
+
+    .schedule-label {
+      display: inline-block;
+      background: #f0f0f0;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 10px;
+      font-weight: 700;
+      margin-right: 4px;
+      color: #555;
+    }
+
+    .schedule-label.active-label {
+      background: #667eea;
+      color: white;
     }
 
     /* ===== MODAL ===== */
@@ -492,7 +639,7 @@
       border-radius: 16px;
       padding: 30px;
       width: 100%;
-      max-width: 520px;
+      max-width: 560px;
       box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
       max-height: 90vh;
       overflow-y: auto;
@@ -529,6 +676,46 @@
 
     .btn-close:hover {
       color: #333;
+    }
+
+    /* ===== SCHEDULE TABS ===== */
+    .schedule-tabs {
+      display: flex;
+      gap: 0;
+      margin-bottom: 25px;
+      border-radius: 8px;
+      overflow: hidden;
+      border: 2px solid #667eea;
+    }
+
+    .schedule-tab {
+      flex: 1;
+      padding: 12px 16px;
+      background: white;
+      color: #667eea;
+      border: none;
+      cursor: pointer;
+      font-weight: 700;
+      font-size: 14px;
+      transition: all 0.3s;
+      text-align: center;
+    }
+
+    .schedule-tab.active {
+      background: #667eea;
+      color: white;
+    }
+
+    .schedule-tab:hover:not(.active) {
+      background: #f0f3ff;
+    }
+
+    .schedule-panel {
+      display: none;
+    }
+
+    .schedule-panel.active {
+      display: block;
     }
 
     .form-section {
@@ -780,6 +967,16 @@
       .login-card {
         margin: 20px;
       }
+
+      .digital-clock {
+        width: 100%;
+        justify-content: center;
+      }
+
+      .battery-widget {
+        width: 100%;
+        justify-content: center;
+      }
     }
   </style>
 </head>
@@ -787,12 +984,12 @@
   <!-- LOGIN PAGE -->
   <div class="login-page" id="loginPage">
     <div class="login-card">
-      <h1>🔐 Smart Relay</h1>
+      <h1>Smart Relay</h1>
       <p>Control Your Devices Remotely</p>
       <div id="errorAlert"></div>
       
       <div class="form-group">
-        <label for="email">📧 Email Address</label>
+        <label for="email">Email Address</label>
         <input 
           type="email" 
           id="email" 
@@ -802,15 +999,15 @@
       </div>
 
       <div class="form-group password-toggle">
-        <label for="password">🔒 Password</label>
+        <label for="password">Password</label>
         <input 
           type="password" 
           id="password" 
-          placeholder="••••••••"
+          placeholder="********"
           autocomplete="current-password"
         />
         <button type="button" class="toggle-btn" id="togglePassword" title="Show/Hide Password">
-          👁️
+          Show
         </button>
       </div>
 
@@ -826,9 +1023,28 @@
       <!-- HEADER -->
       <div class="header">
         <div>
-          <h1>⚡ Smart Relay Control</h1>
+          <h1>Smart Relay Control</h1>
         </div>
         <div class="header-info">
+          <!-- DIGITAL CLOCK -->
+          <div class="digital-clock">
+            <div>
+              <div class="clock-time" id="clockTime">--:--:--</div>
+              <div class="clock-date" id="clockDate">--- --- --</div>
+            </div>
+          </div>
+          <!-- BATTERY VOLTAGE -->
+          <div class="battery-widget" id="batteryWidget">
+            <div class="battery-icon-wrapper">
+              <div class="battery-outline">
+                <div class="battery-fill" id="batteryFill"></div>
+              </div>
+            </div>
+            <div class="battery-info">
+              <span class="battery-voltage" id="batteryVoltage">--.- V</span>
+              <span class="battery-percent" id="batteryPercent">-- %</span>
+            </div>
+          </div>
           <div class="connection-status">
             <div class="status-dot" id="statusDot"></div>
             <span id="statusText">Connecting...</span>
@@ -839,8 +1055,8 @@
 
       <!-- CONTROL BAR -->
       <div class="control-bar">
-        <button class="btn-control btn-all-on" id="allOnBtn">✓ All ON</button>
-        <button class="btn-control btn-all-off" id="allOffBtn">✗ All OFF</button>
+        <button class="btn-control btn-all-on" id="allOnBtn">All ON</button>
+        <button class="btn-control btn-all-off" id="allOffBtn">All OFF</button>
       </div>
 
       <!-- RELAY GRID -->
@@ -850,92 +1066,149 @@
     </div>
   </div>
 
-  <!-- SCHEDULE MODAL -->
+  <!-- SCHEDULE MODAL (DUAL SCHEDULE) -->
   <div class="modal" id="scheduleModal">
     <div class="modal-content">
       <div class="modal-header">
-        <h2 id="modalTitle">⏰ Schedule Relay 1</h2>
-        <button class="btn-close" id="modalClose">×</button>
+        <h2 id="modalTitle">Schedule Relay 1</h2>
+        <button class="btn-close" id="modalClose">&times;</button>
       </div>
 
       <div id="alertContainer"></div>
 
-      <!-- ENABLE SCHEDULE -->
-      <div class="form-section">
-        <h3>📅 Enable Schedule</h3>
-        <div class="toggle-switch">
-          <div class="switch" id="scheduleSwitch"></div>
-          <span id="scheduleStatus">Disabled</span>
-        </div>
+      <!-- SCHEDULE TABS -->
+      <div class="schedule-tabs">
+        <button class="schedule-tab active" id="tabA" data-tab="A">Schedule 1</button>
+        <button class="schedule-tab" id="tabB" data-tab="B">Schedule 2</button>
       </div>
 
-      <!-- TIME RANGE -->
-      <div class="form-section">
-        <h3>⏱️ Time Range</h3>
-        <div style="margin-bottom: 15px;">
-          <label style="display: block; margin-bottom: 8px; color: #666; font-size: 14px; font-weight: 600;">Start Time</label>
-          <div class="time-input-group">
-            <input type="number" id="startHour" min="0" max="23" placeholder="00" />
-            <span>:</span>
-            <input type="number" id="startMinute" min="0" max="59" placeholder="00" />
+      <!-- ===== SCHEDULE A PANEL ===== -->
+      <div class="schedule-panel active" id="panelA">
+        <!-- ENABLE SCHEDULE A -->
+        <div class="form-section">
+          <h3>Enable Schedule 1</h3>
+          <div class="toggle-switch">
+            <div class="switch" id="scheduleSwitchA"></div>
+            <span id="scheduleStatusA">Disabled</span>
           </div>
         </div>
-        <div>
-          <label style="display: block; margin-bottom: 8px; color: #666; font-size: 14px; font-weight: 600;">End Time</label>
-          <div class="time-input-group">
-            <input type="number" id="endHour" min="0" max="23" placeholder="00" />
-            <span>:</span>
-            <input type="number" id="endMinute" min="0" max="59" placeholder="00" />
+
+        <!-- TIME RANGE A -->
+        <div class="form-section">
+          <h3>Time Range</h3>
+          <div style="margin-bottom: 15px;">
+            <label style="display: block; margin-bottom: 8px; color: #666; font-size: 14px; font-weight: 600;">Start Time</label>
+            <div class="time-input-group">
+              <input type="number" id="startHourA" min="0" max="23" placeholder="00" />
+              <span>:</span>
+              <input type="number" id="startMinuteA" min="0" max="59" placeholder="00" />
+            </div>
+          </div>
+          <div>
+            <label style="display: block; margin-bottom: 8px; color: #666; font-size: 14px; font-weight: 600;">End Time</label>
+            <div class="time-input-group">
+              <input type="number" id="endHourA" min="0" max="23" placeholder="00" />
+              <span>:</span>
+              <input type="number" id="endMinuteA" min="0" max="59" placeholder="00" />
+            </div>
+          </div>
+        </div>
+
+        <!-- SCHEDULE DAYS A -->
+        <div class="form-section">
+          <h3>Active Days</h3>
+          <div class="checkbox-group">
+            <label class="checkbox-item"><input type="checkbox" value="monday" class="day-checkbox-a" /> Mon</label>
+            <label class="checkbox-item"><input type="checkbox" value="tuesday" class="day-checkbox-a" /> Tue</label>
+            <label class="checkbox-item"><input type="checkbox" value="wednesday" class="day-checkbox-a" /> Wed</label>
+            <label class="checkbox-item"><input type="checkbox" value="thursday" class="day-checkbox-a" /> Thu</label>
+            <label class="checkbox-item"><input type="checkbox" value="friday" class="day-checkbox-a" /> Fri</label>
+            <label class="checkbox-item"><input type="checkbox" value="saturday" class="day-checkbox-a" /> Sat</label>
+            <label class="checkbox-item"><input type="checkbox" value="sunday" class="day-checkbox-a" /> Sun</label>
+          </div>
+        </div>
+
+        <!-- MODE A -->
+        <div class="form-section">
+          <h3>Action</h3>
+          <div class="radio-group">
+            <label class="radio-item">
+              <input type="radio" name="modeA" value="true" checked />
+              Turn ON during time range
+            </label>
+            <label class="radio-item">
+              <input type="radio" name="modeA" value="false" />
+              Turn OFF during time range
+            </label>
           </div>
         </div>
       </div>
 
-      <!-- SCHEDULE DAYS -->
-      <div class="form-section">
-        <h3>📆 Active Days</h3>
-        <div class="checkbox-group">
-          <label class="checkbox-item">
-            <input type="checkbox" value="monday" class="day-checkbox" /> Mon
-          </label>
-          <label class="checkbox-item">
-            <input type="checkbox" value="tuesday" class="day-checkbox" /> Tue
-          </label>
-          <label class="checkbox-item">
-            <input type="checkbox" value="wednesday" class="day-checkbox" /> Wed
-          </label>
-          <label class="checkbox-item">
-            <input type="checkbox" value="thursday" class="day-checkbox" /> Thu
-          </label>
-          <label class="checkbox-item">
-            <input type="checkbox" value="friday" class="day-checkbox" /> Fri
-          </label>
-          <label class="checkbox-item">
-            <input type="checkbox" value="saturday" class="day-checkbox" /> Sat
-          </label>
-          <label class="checkbox-item">
-            <input type="checkbox" value="sunday" class="day-checkbox" /> Sun
-          </label>
+      <!-- ===== SCHEDULE B PANEL ===== -->
+      <div class="schedule-panel" id="panelB">
+        <!-- ENABLE SCHEDULE B -->
+        <div class="form-section">
+          <h3>Enable Schedule 2</h3>
+          <div class="toggle-switch">
+            <div class="switch" id="scheduleSwitchB"></div>
+            <span id="scheduleStatusB">Disabled</span>
+          </div>
         </div>
-      </div>
 
-      <!-- MODE -->
-      <div class="form-section">
-        <h3>⚙️ Action</h3>
-        <div class="radio-group">
-          <label class="radio-item">
-            <input type="radio" name="mode" value="true" checked />
-            Turn ON during time range
-          </label>
-          <label class="radio-item">
-            <input type="radio" name="mode" value="false" />
-            Turn OFF during time range
-          </label>
+        <!-- TIME RANGE B -->
+        <div class="form-section">
+          <h3>Time Range</h3>
+          <div style="margin-bottom: 15px;">
+            <label style="display: block; margin-bottom: 8px; color: #666; font-size: 14px; font-weight: 600;">Start Time</label>
+            <div class="time-input-group">
+              <input type="number" id="startHourB" min="0" max="23" placeholder="00" />
+              <span>:</span>
+              <input type="number" id="startMinuteB" min="0" max="59" placeholder="00" />
+            </div>
+          </div>
+          <div>
+            <label style="display: block; margin-bottom: 8px; color: #666; font-size: 14px; font-weight: 600;">End Time</label>
+            <div class="time-input-group">
+              <input type="number" id="endHourB" min="0" max="23" placeholder="00" />
+              <span>:</span>
+              <input type="number" id="endMinuteB" min="0" max="59" placeholder="00" />
+            </div>
+          </div>
+        </div>
+
+        <!-- SCHEDULE DAYS B -->
+        <div class="form-section">
+          <h3>Active Days</h3>
+          <div class="checkbox-group">
+            <label class="checkbox-item"><input type="checkbox" value="monday" class="day-checkbox-b" /> Mon</label>
+            <label class="checkbox-item"><input type="checkbox" value="tuesday" class="day-checkbox-b" /> Tue</label>
+            <label class="checkbox-item"><input type="checkbox" value="wednesday" class="day-checkbox-b" /> Wed</label>
+            <label class="checkbox-item"><input type="checkbox" value="thursday" class="day-checkbox-b" /> Thu</label>
+            <label class="checkbox-item"><input type="checkbox" value="friday" class="day-checkbox-b" /> Fri</label>
+            <label class="checkbox-item"><input type="checkbox" value="saturday" class="day-checkbox-b" /> Sat</label>
+            <label class="checkbox-item"><input type="checkbox" value="sunday" class="day-checkbox-b" /> Sun</label>
+          </div>
+        </div>
+
+        <!-- MODE B -->
+        <div class="form-section">
+          <h3>Action</h3>
+          <div class="radio-group">
+            <label class="radio-item">
+              <input type="radio" name="modeB" value="true" checked />
+              Turn ON during time range
+            </label>
+            <label class="radio-item">
+              <input type="radio" name="modeB" value="false" />
+              Turn OFF during time range
+            </label>
+          </div>
         </div>
       </div>
 
       <!-- BUTTONS -->
       <button class="btn-save" id="saveSched">Save Schedule</button>
-      <button class="btn-delete" id="deleteSched">Delete Schedule</button>
+      <button class="btn-delete" id="deleteSched">Delete All Schedules</button>
     </div>
   </div>
 
@@ -957,16 +1230,24 @@
 
     firebase.initializeApp(firebaseConfig);
 
-    // ===== SECURITY: Hardcoded credentials (untuk production gunakan proper auth) =====
+    // ===== SECURITY: Hardcoded credentials =====
     const ALLOWED_EMAIL = "fazz@gmail.com";
     const ALLOWED_PASSWORD = "100100";
 
     // ===== STATE =====
     const relayStates = { 1: false, 2: false, 3: false, 4: false };
-    const scheduleData = { 1: {}, 2: {}, 3: {}, 4: {} };
+    // DUAL SCHEDULE: setiap relay punya scheduleA dan scheduleB
+    const scheduleData = {
+      1: { scheduleA: {}, scheduleB: {} },
+      2: { scheduleA: {}, scheduleB: {} },
+      3: { scheduleA: {}, scheduleB: {} },
+      4: { scheduleA: {}, scheduleB: {} }
+    };
     const relayLoading = { 1: false, 2: false, 3: false, 4: false };
     let currentEditingRelay = null;
+    let currentTab = "A"; // A atau B
     let isLoggedIn = false;
+    let clockInterval = null;
 
     // ===== DOM ELEMENTS =====
     const loginPage = document.getElementById("loginPage");
@@ -984,7 +1265,102 @@
       const passwordInput = document.getElementById("password");
       const type = passwordInput.type === "password" ? "text" : "password";
       passwordInput.type = type;
-      this.textContent = type === "password" ? "👁️" : "🙈";
+      this.textContent = type === "password" ? "Show" : "Hide";
+    });
+
+    // ===== DIGITAL CLOCK =====
+    function updateClock() {
+      const now = new Date();
+      const hours = String(now.getHours()).padStart(2, '0');
+      const minutes = String(now.getMinutes()).padStart(2, '0');
+      const seconds = String(now.getSeconds()).padStart(2, '0');
+      
+      const dayNames = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+      const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'];
+      
+      const dayName = dayNames[now.getDay()];
+      const date = now.getDate();
+      const month = monthNames[now.getMonth()];
+      const year = now.getFullYear();
+
+      document.getElementById("clockTime").textContent = hours + ":" + minutes + ":" + seconds;
+      document.getElementById("clockDate").textContent = dayName + ", " + date + " " + month + " " + year;
+    }
+
+    function startClock() {
+      updateClock();
+      clockInterval = setInterval(updateClock, 1000);
+    }
+
+    function stopClock() {
+      if (clockInterval) {
+        clearInterval(clockInterval);
+        clockInterval = null;
+      }
+    }
+
+    // ===== BATTERY VOLTAGE =====
+    const BATTERY_FULL = 14.6;    // Tegangan penuh (V)
+    const BATTERY_EMPTY = 10.0;   // Tegangan kosong (V)
+
+    function updateBatteryDisplay(voltage) {
+      var voltageEl = document.getElementById("batteryVoltage");
+      var percentEl = document.getElementById("batteryPercent");
+      var fillEl = document.getElementById("batteryFill");
+
+      if (!voltageEl || !percentEl || !fillEl) return;
+
+      // Hitung persentase
+      var percent = ((voltage - BATTERY_EMPTY) / (BATTERY_FULL - BATTERY_EMPTY)) * 100;
+      percent = Math.max(0, Math.min(100, percent));
+      percent = Math.round(percent);
+
+      // Tentukan level
+      var level = "high";
+      if (percent <= 10) level = "critical";
+      else if (percent <= 25) level = "low";
+      else if (percent <= 50) level = "medium";
+
+      // Update tampilan
+      voltageEl.textContent = voltage.toFixed(1) + " V";
+      percentEl.textContent = percent + " %";
+
+      // Update fill bar
+      fillEl.style.width = percent + "%";
+      fillEl.className = "battery-fill " + level;
+
+      // Update percent color
+      percentEl.className = "battery-percent " + level;
+    }
+
+    // ===== SCHEDULE TAB SWITCHING =====
+    document.getElementById("tabA").addEventListener("click", function() {
+      switchTab("A");
+    });
+
+    document.getElementById("tabB").addEventListener("click", function() {
+      switchTab("B");
+    });
+
+    function switchTab(tab) {
+      currentTab = tab;
+      // Update tab buttons
+      document.getElementById("tabA").classList.toggle("active", tab === "A");
+      document.getElementById("tabB").classList.toggle("active", tab === "B");
+      // Update panels
+      document.getElementById("panelA").classList.toggle("active", tab === "A");
+      document.getElementById("panelB").classList.toggle("active", tab === "B");
+    }
+
+    // ===== SCHEDULE SWITCH TOGGLES =====
+    document.getElementById("scheduleSwitchA").addEventListener("click", function() {
+      this.classList.toggle("active");
+      document.getElementById("scheduleStatusA").textContent = this.classList.contains("active") ? "Enabled" : "Disabled";
+    });
+
+    document.getElementById("scheduleSwitchB").addEventListener("click", function() {
+      this.classList.toggle("active");
+      document.getElementById("scheduleStatusB").textContent = this.classList.contains("active") ? "Enabled" : "Disabled";
     });
 
     // ===== LOGIN HANDLER =====
@@ -1002,20 +1378,19 @@
       const email = document.getElementById("email").value.trim();
       const password = document.getElementById("password").value;
       const errorAlert = document.getElementById("errorAlert");
-      const loginBtn = document.getElementById("loginBtn");
 
       if (!email || !password) {
-        showError(errorAlert, "⚠️ Please enter email and password");
+        showError(errorAlert, "Please enter email and password");
         return;
       }
 
       if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-        showError(errorAlert, "⚠️ Please enter a valid email");
+        showError(errorAlert, "Please enter a valid email");
         return;
       }
 
       if (email !== ALLOWED_EMAIL || password !== ALLOWED_PASSWORD) {
-        showError(errorAlert, "❌ Invalid email or password");
+        showError(errorAlert, "Invalid email or password");
         return;
       }
 
@@ -1024,16 +1399,17 @@
       loginPage.classList.add("hidden");
       dashboard.classList.add("active");
       isLoggedIn = true;
+      startClock();
       initDashboard();
     }
 
     function showError(container, message) {
-      container.innerHTML = `<div class="alert error">${message}</div>`;
+      container.innerHTML = '<div class="alert error">' + message + '</div>';
     }
 
     function showSuccess(container, message) {
-      container.innerHTML = `<div class="alert success">${message}</div>`;
-      setTimeout(() => {
+      container.innerHTML = '<div class="alert success">' + message + '</div>';
+      setTimeout(function() {
         container.innerHTML = "";
       }, 3000);
     }
@@ -1041,251 +1417,418 @@
     // ===== INIT DASHBOARD =====
     function initDashboard() {
       // Create relay cards
-      for (let i = 1; i <= 4; i++) {
-        const card = createRelayCard(i);
+      for (var i = 1; i <= 4; i++) {
+        var card = createRelayCard(i);
         relayGrid.appendChild(card);
       }
 
       // Monitor connection
-      firebase.database().ref(".info/connected").on("value", (snap) => {
-        const statusDot = document.getElementById("statusDot");
-        const statusText = document.getElementById("statusText");
+      firebase.database().ref(".info/connected").on("value", function(snap) {
+        var statusDot = document.getElementById("statusDot");
+        var statusText = document.getElementById("statusText");
         if (snap.val()) {
           statusDot.classList.add("online");
-          statusText.textContent = "✓ Connected";
+          statusText.textContent = "Connected";
         } else {
           statusDot.classList.remove("online");
-          statusText.textContent = "✗ Disconnected";
+          statusText.textContent = "Disconnected";
         }
       });
 
       // Listen to relay states
-      for (let i = 1; i <= 4; i++) {
-        firebase.database().ref(`/relay${i}`).on("value", (snap) => {
-          relayStates[i] = !!snap.val();
-          updateRelayCard(i);
-        });
+      for (var i = 1; i <= 4; i++) {
+        (function(relayNum) {
+          firebase.database().ref("/relay" + relayNum).on("value", function(snap) {
+            relayStates[relayNum] = !!snap.val();
+            updateRelayCard(relayNum);
+          });
 
-        // Load schedules
-        firebase.database().ref(`/schedule${i}`).on("value", (snap) => {
-          if (snap.exists()) {
-            scheduleData[i] = snap.val();
-          } else {
-            scheduleData[i] = {
-              enabled: false,
-              startTime: "06:00",
-              endTime: "22:00",
-              days: []
-            };
-          }
-          updateScheduleIndicator(i);
-        });
+          // Load DUAL schedules
+          firebase.database().ref("/schedule" + relayNum).on("value", function(snap) {
+            if (snap.exists()) {
+              var data = snap.val();
+              // DUAL SCHEDULE STRUCTURE
+              if (data.scheduleA || data.scheduleB) {
+                // New dual format
+                scheduleData[relayNum] = {
+                  scheduleA: data.scheduleA || { enabled: false, startTime: "06:00", endTime: "22:00", days: [], mode: true },
+                  scheduleB: data.scheduleB || { enabled: false, startTime: "06:00", endTime: "22:00", days: [], mode: true }
+                };
+              } else if (data.enabled !== undefined) {
+                // BACKWARD COMPAT: Old single schedule format -> migrate to scheduleA
+                scheduleData[relayNum] = {
+                  scheduleA: {
+                    enabled: data.enabled,
+                    startTime: data.startTime || "06:00",
+                    endTime: data.endTime || "22:00",
+                    days: data.days || [],
+                    mode: data.mode !== undefined ? data.mode : true
+                  },
+                  scheduleB: { enabled: false, startTime: "06:00", endTime: "22:00", days: [], mode: true }
+                };
+              } else {
+                scheduleData[relayNum] = {
+                  scheduleA: { enabled: false, startTime: "06:00", endTime: "22:00", days: [], mode: true },
+                  scheduleB: { enabled: false, startTime: "06:00", endTime: "22:00", days: [], mode: true }
+                };
+              }
+            } else {
+              scheduleData[relayNum] = {
+                scheduleA: { enabled: false, startTime: "06:00", endTime: "22:00", days: [], mode: true },
+                scheduleB: { enabled: false, startTime: "06:00", endTime: "22:00", days: [], mode: true }
+              };
+            }
+            updateScheduleIndicator(relayNum);
+          });
+        })(i);
       }
+
+      // Check schedule status setiap menit
+      setInterval(function() {
+        for (var i = 1; i <= 4; i++) {
+          updateScheduleIndicator(i);
+        }
+      }, 60000);
+
+      // ===== LISTEN BATTERY VOLTAGE =====
+      firebase.database().ref("/voltage").on("value", function(snap) {
+        if (snap.exists()) {
+          var voltage = parseFloat(snap.val());
+          if (!isNaN(voltage) && voltage >= 0 && voltage <= 25) {
+            updateBatteryDisplay(voltage);
+          }
+        }
+      });
     }
 
     // ===== CREATE RELAY CARD =====
     function createRelayCard(relayNum) {
-      const card = document.createElement("div");
-      card.className = `relay-card ${relayStates[relayNum] ? "on" : "off"}`;
-      card.id = `relay-${relayNum}`;
+      var card = document.createElement("div");
+      card.className = "relay-card " + (relayStates[relayNum] ? "on" : "off");
+      card.id = "relay-" + relayNum;
 
-      card.innerHTML = `
-        <div class="relay-header">
-          <div class="relay-title">⚡ Relay ${relayNum}</div>
-          <div class="relay-status ${relayStates[relayNum] ? "on" : "off"}"></div>
-        </div>
-
-        <div class="relay-state ${relayStates[relayNum] ? "on" : "off"}" id="state-${relayNum}">
-          ${relayStates[relayNum] ? "ON" : "OFF"}
-        </div>
-
-        <div class="btn-group">
-          <button class="btn-toggle btn-on" id="btn-on-${relayNum}" data-relay="${relayNum}">
-            ✓ ON
-          </button>
-          <button class="btn-toggle btn-off" id="btn-off-${relayNum}" data-relay="${relayNum}">
-            ✗ OFF
-          </button>
-        </div>
-
-        <button class="schedule-btn" id="sched-${relayNum}" data-relay="${relayNum}">
-          ⏰ Schedule
-        </button>
-
-        <div class="schedule-indicator" id="indicator-${relayNum}"></div>
-      `;
+      card.innerHTML = '<div class="relay-header">' +
+        '<div class="relay-title">Relay ' + relayNum + '</div>' +
+        '<div class="relay-status ' + (relayStates[relayNum] ? "on" : "off") + '"></div>' +
+        '</div>' +
+        '<div class="relay-state ' + (relayStates[relayNum] ? "on" : "off") + '" id="state-' + relayNum + '">' +
+        (relayStates[relayNum] ? "ON" : "OFF") +
+        '</div>' +
+        '<div class="btn-group">' +
+        '<button class="btn-toggle btn-on" id="btn-on-' + relayNum + '" data-relay="' + relayNum + '">ON</button>' +
+        '<button class="btn-toggle btn-off" id="btn-off-' + relayNum + '" data-relay="' + relayNum + '">OFF</button>' +
+        '</div>' +
+        '<button class="schedule-btn" id="sched-' + relayNum + '" data-relay="' + relayNum + '">Schedule</button>' +
+        '<div class="schedule-indicator" id="indicator-' + relayNum + '"></div>';
 
       // Button handlers
-      card.querySelector(`#btn-on-${relayNum}`).addEventListener("click", () => toggleRelay(relayNum, true));
-      card.querySelector(`#btn-off-${relayNum}`).addEventListener("click", () => toggleRelay(relayNum, false));
-      card.querySelector(`#sched-${relayNum}`).addEventListener("click", () => openScheduleModal(relayNum));
+      (function(num) {
+        card.querySelector("#btn-on-" + num).addEventListener("click", function() { toggleRelay(num, true); });
+        card.querySelector("#btn-off-" + num).addEventListener("click", function() { toggleRelay(num, false); });
+        card.querySelector("#sched-" + num).addEventListener("click", function() { openScheduleModal(num); });
+      })(relayNum);
 
       return card;
     }
 
     // ===== TOGGLE RELAY =====
     function toggleRelay(relayNum, state) {
+      var btnOn = document.getElementById("btn-on-" + relayNum);
+      var btnOff = document.getElementById("btn-off-" + relayNum);
+      btnOn.disabled = true;
+      btnOff.disabled = true;
+      
       relayLoading[relayNum] = true;
       updateRelayCard(relayNum);
 
-      firebase.database().ref(`/relay${relayNum}`).set(state)
-        .then(() => {
+      firebase.database().ref("/relay" + relayNum).set(state)
+        .then(function() {
           relayLoading[relayNum] = false;
           updateRelayCard(relayNum);
+          setTimeout(function() {
+            btnOn.disabled = false;
+            btnOff.disabled = false;
+          }, 500);
         })
-        .catch((error) => {
+        .catch(function(error) {
           console.error("Error updating relay:", error);
           relayLoading[relayNum] = false;
           updateRelayCard(relayNum);
-          showError(document.getElementById("errorAlert"), "❌ Failed to update relay");
+          showError(document.getElementById("errorAlert"), "Failed to update relay");
+          btnOn.disabled = false;
+          btnOff.disabled = false;
         });
     }
 
     // ===== UPDATE RELAY CARD =====
     function updateRelayCard(relayNum) {
-      const card = document.getElementById(`relay-${relayNum}`);
-      const state = relayStates[relayNum];
-      const isLoading = relayLoading[relayNum];
+      var card = document.getElementById("relay-" + relayNum);
+      var state = relayStates[relayNum];
+      var isLoading = relayLoading[relayNum];
 
       if (!card) return;
 
-      card.className = `relay-card ${state ? "on" : "off"}`;
+      card.className = "relay-card " + (state ? "on" : "off");
 
-      const stateDiv = card.querySelector(`#state-${relayNum}`);
-      stateDiv.className = `relay-state ${state ? "on" : "off"}`;
+      var stateDiv = card.querySelector("#state-" + relayNum);
+      stateDiv.className = "relay-state " + (state ? "on" : "off");
       stateDiv.textContent = isLoading ? "..." : (state ? "ON" : "OFF");
 
-      const statusDot = card.querySelector(".relay-status");
-      statusDot.className = `relay-status ${state ? "on" : "off"}`;
+      var statusDot = card.querySelector(".relay-status");
+      statusDot.className = "relay-status " + (state ? "on" : "off");
 
-      const btnOn = card.querySelector(`#btn-on-${relayNum}`);
-      const btnOff = card.querySelector(`#btn-off-${relayNum}`);
+      var btnOn = card.querySelector("#btn-on-" + relayNum);
+      var btnOff = card.querySelector("#btn-off-" + relayNum);
       btnOn.disabled = isLoading || state;
       btnOff.disabled = isLoading || !state;
     }
 
-    // ===== UPDATE SCHEDULE INDICATOR =====
-    function updateScheduleIndicator(relayNum) {
-      const indicator = document.getElementById(`indicator-${relayNum}`);
-      const schedule = scheduleData[relayNum];
+    // ===== CHECK SINGLE SCHEDULE STATUS =====
+    function isSubScheduleActive(schedule) {
+      if (!schedule || !schedule.enabled) return false;
 
-      if (schedule && schedule.enabled) {
-        indicator.className = "schedule-indicator active";
-        indicator.textContent = `⏲️ ${schedule.startTime} - ${schedule.endTime}`;
-      } else {
-        indicator.className = "schedule-indicator";
-        indicator.textContent = "No schedule";
+      var now = new Date();
+      var currentHour = now.getHours();
+      var currentMinute = now.getMinutes();
+      var currentDay = now.getDay();
+      var currentTime = currentHour * 60 + currentMinute;
+
+      var dayMap = { "sunday": 0, "monday": 1, "tuesday": 2, "wednesday": 3, "thursday": 4, "friday": 5, "saturday": 6 };
+      var activeDays = [];
+      if (schedule.days) {
+        // Support both number format (from firebase) and string format
+        activeDays = schedule.days.map(function(d) {
+          return typeof d === 'number' ? d : dayMap[d];
+        });
       }
+      
+      if (activeDays.length === 0) return false;
+      if (activeDays.indexOf(currentDay) === -1) return false;
+
+      var startParts = (schedule.startTime || "06:00").split(":");
+      var startTime = parseInt(startParts[0]) * 60 + parseInt(startParts[1]);
+      
+      var endParts = (schedule.endTime || "22:00").split(":");
+      var endTime = parseInt(endParts[0]) * 60 + parseInt(endParts[1]);
+
+      var isInTimeRange = false;
+      if (startTime < endTime) {
+        isInTimeRange = currentTime >= startTime && currentTime < endTime;
+      } else if (startTime > endTime) {
+        isInTimeRange = currentTime >= startTime || currentTime < endTime;
+      }
+
+      return isInTimeRange;
     }
 
-    // ===== OPEN SCHEDULE MODAL =====
+    // ===== UPDATE SCHEDULE INDICATOR (DUAL) =====
+    function updateScheduleIndicator(relayNum) {
+      var indicator = document.getElementById("indicator-" + relayNum);
+      if (!indicator) return;
+
+      var data = scheduleData[relayNum];
+      var schedA = data.scheduleA;
+      var schedB = data.scheduleB;
+      var activeA = isSubScheduleActive(schedA);
+      var activeB = isSubScheduleActive(schedB);
+      var hasA = schedA && schedA.enabled;
+      var hasB = schedB && schedB.enabled;
+
+      if (!hasA && !hasB) {
+        indicator.className = "schedule-indicator";
+        indicator.textContent = "No schedule";
+        return;
+      }
+
+      var isAnyActive = activeA || activeB;
+      indicator.className = "schedule-indicator" + (isAnyActive ? " active" : "");
+
+      var html = "";
+
+      if (hasA) {
+        var modeA = schedA.mode !== false ? "ON" : "OFF";
+        var statusA = activeA ? "ACTIVE" : "SET";
+        var labelClassA = activeA ? "schedule-label active-label" : "schedule-label";
+        html += '<span class="schedule-line"><span class="' + labelClassA + '">S1</span>' + statusA + ' ' + modeA + ' ' + schedA.startTime + ' - ' + schedA.endTime + '</span>';
+      }
+
+      if (hasB) {
+        var modeB = schedB.mode !== false ? "ON" : "OFF";
+        var statusB = activeB ? "ACTIVE" : "SET";
+        var labelClassB = activeB ? "schedule-label active-label" : "schedule-label";
+        if (html) html += '<br>';
+        html += '<span class="schedule-line"><span class="' + labelClassB + '">S2</span>' + statusB + ' ' + modeB + ' ' + schedB.startTime + ' - ' + schedB.endTime + '</span>';
+      }
+
+      indicator.innerHTML = html;
+    }
+
+    // ===== OPEN SCHEDULE MODAL (DUAL) =====
     function openScheduleModal(relayNum) {
       currentEditingRelay = relayNum;
-      const schedule = scheduleData[relayNum];
+      currentTab = "A";
+      switchTab("A");
 
-      document.getElementById("modalTitle").textContent = `⏰ Schedule Relay ${relayNum}`;
+      var data = scheduleData[relayNum];
+      var schedA = data.scheduleA || {};
+      var schedB = data.scheduleB || {};
 
-      // Reset form
-      const scheduleSwitch = document.getElementById("scheduleSwitch");
-      scheduleSwitch.classList.toggle("active", schedule.enabled);
-      document.getElementById("scheduleStatus").textContent = schedule.enabled ? "Enabled" : "Disabled";
+      document.getElementById("modalTitle").textContent = "Schedule Relay " + relayNum;
 
-      document.getElementById("startHour").value = schedule.startTime?.substring(0, 2) || "06";
-      document.getElementById("startMinute").value = schedule.startTime?.substring(3, 5) || "00";
-      document.getElementById("endHour").value = schedule.endTime?.substring(0, 2) || "22";
-      document.getElementById("endMinute").value = schedule.endTime?.substring(3, 5) || "00";
+      // ===== POPULATE SCHEDULE A =====
+      var switchA = document.getElementById("scheduleSwitchA");
+      switchA.classList.toggle("active", !!schedA.enabled);
+      document.getElementById("scheduleStatusA").textContent = schedA.enabled ? "Enabled" : "Disabled";
 
-      // Set day checkboxes
-      const dayMap = { 1: "monday", 2: "tuesday", 3: "wednesday", 4: "thursday", 5: "friday", 6: "saturday", 0: "sunday" };
-      document.querySelectorAll(".day-checkbox").forEach(cb => cb.checked = false);
-      if (schedule.days) {
-        schedule.days.forEach(day => {
-          const dayName = dayMap[day];
-          document.querySelector(`.day-checkbox[value="${dayName}"]`).checked = true;
+      document.getElementById("startHourA").value = schedA.startTime ? schedA.startTime.substring(0, 2) : "06";
+      document.getElementById("startMinuteA").value = schedA.startTime ? schedA.startTime.substring(3, 5) : "00";
+      document.getElementById("endHourA").value = schedA.endTime ? schedA.endTime.substring(0, 2) : "22";
+      document.getElementById("endMinuteA").value = schedA.endTime ? schedA.endTime.substring(3, 5) : "00";
+
+      // Set day checkboxes A
+      var dayMapReverse = { 1: "monday", 2: "tuesday", 3: "wednesday", 4: "thursday", 5: "friday", 6: "saturday", 0: "sunday" };
+      document.querySelectorAll(".day-checkbox-a").forEach(function(cb) { cb.checked = false; });
+      if (schedA.days) {
+        schedA.days.forEach(function(day) {
+          var dayName = typeof day === 'number' ? dayMapReverse[day] : day;
+          var cb = document.querySelector('.day-checkbox-a[value="' + dayName + '"]');
+          if (cb) cb.checked = true;
         });
       }
 
-      // Set mode radio
-      const modeValue = schedule.mode !== undefined ? schedule.mode : "true";
-      document.querySelector(`input[name="mode"][value="${modeValue}"]`).checked = true;
+      // Set mode radio A
+      var modeAValue = schedA.mode !== undefined ? String(schedA.mode) : "true";
+      var modeARadio = document.querySelector('input[name="modeA"][value="' + modeAValue + '"]');
+      if (modeARadio) modeARadio.checked = true;
+
+      // ===== POPULATE SCHEDULE B =====
+      var switchB = document.getElementById("scheduleSwitchB");
+      switchB.classList.toggle("active", !!schedB.enabled);
+      document.getElementById("scheduleStatusB").textContent = schedB.enabled ? "Enabled" : "Disabled";
+
+      document.getElementById("startHourB").value = schedB.startTime ? schedB.startTime.substring(0, 2) : "06";
+      document.getElementById("startMinuteB").value = schedB.startTime ? schedB.startTime.substring(3, 5) : "00";
+      document.getElementById("endHourB").value = schedB.endTime ? schedB.endTime.substring(0, 2) : "22";
+      document.getElementById("endMinuteB").value = schedB.endTime ? schedB.endTime.substring(3, 5) : "00";
+
+      // Set day checkboxes B
+      document.querySelectorAll(".day-checkbox-b").forEach(function(cb) { cb.checked = false; });
+      if (schedB.days) {
+        schedB.days.forEach(function(day) {
+          var dayName = typeof day === 'number' ? dayMapReverse[day] : day;
+          var cb = document.querySelector('.day-checkbox-b[value="' + dayName + '"]');
+          if (cb) cb.checked = true;
+        });
+      }
+
+      // Set mode radio B
+      var modeBValue = schedB.mode !== undefined ? String(schedB.mode) : "true";
+      var modeBRadio = document.querySelector('input[name="modeB"][value="' + modeBValue + '"]');
+      if (modeBRadio) modeBRadio.checked = true;
 
       scheduleModal.classList.add("active");
     }
 
-    // ===== SCHEDULE MODAL HANDLERS =====
-    document.getElementById("scheduleSwitch").addEventListener("click", function() {
-      this.classList.toggle("active");
-      document.getElementById("scheduleStatus").textContent = this.classList.contains("active") ? "Enabled" : "Disabled";
-    });
-
-    modalClose.addEventListener("click", () => {
+    // ===== MODAL CLOSE =====
+    modalClose.addEventListener("click", function() {
       scheduleModal.classList.remove("active");
     });
 
+    // ===== SAVE DUAL SCHEDULE =====
     document.getElementById("saveSched").addEventListener("click", saveSchedule);
 
     function saveSchedule() {
-      const enabled = document.getElementById("scheduleSwitch").classList.contains("active");
-      const startHour = String(document.getElementById("startHour").value).padStart(2, "0");
-      const startMinute = String(document.getElementById("startMinute").value).padStart(2, "0");
-      const endHour = String(document.getElementById("endHour").value).padStart(2, "0");
-      const endMinute = String(document.getElementById("endMinute").value).padStart(2, "0");
+      var dayMap = { "monday": 1, "tuesday": 2, "wednesday": 3, "thursday": 4, "friday": 5, "saturday": 6, "sunday": 0 };
 
-      const dayMap = { "monday": 1, "tuesday": 2, "wednesday": 3, "thursday": 4, "friday": 5, "saturday": 6, "sunday": 0 };
-      const activeDays = [];
-      document.querySelectorAll(".day-checkbox:checked").forEach(cb => {
-        activeDays.push(dayMap[cb.value]);
+      // ===== Collect Schedule A =====
+      var enabledA = document.getElementById("scheduleSwitchA").classList.contains("active");
+      var startHourA = String(document.getElementById("startHourA").value).padStart(2, "0");
+      var startMinuteA = String(document.getElementById("startMinuteA").value).padStart(2, "0");
+      var endHourA = String(document.getElementById("endHourA").value).padStart(2, "0");
+      var endMinuteA = String(document.getElementById("endMinuteA").value).padStart(2, "0");
+      var daysA = [];
+      document.querySelectorAll(".day-checkbox-a:checked").forEach(function(cb) {
+        daysA.push(dayMap[cb.value]);
       });
+      var modeARadio = document.querySelector('input[name="modeA"]:checked');
+      var modeA = modeARadio ? modeARadio.value === "true" : true;
 
-      const mode = document.querySelector('input[name="mode"]:checked').value === "true";
-
-      const schedule = {
-        enabled: enabled,
-        startTime: `${startHour}:${startMinute}`,
-        endTime: `${endHour}:${endMinute}`,
-        days: activeDays,
-        mode: mode
+      var scheduleA = {
+        enabled: enabledA,
+        startTime: startHourA + ":" + startMinuteA,
+        endTime: endHourA + ":" + endMinuteA,
+        days: daysA,
+        mode: modeA
       };
 
-      firebase.database().ref(`/schedule${currentEditingRelay}`).set(schedule)
-        .then(() => {
+      // ===== Collect Schedule B =====
+      var enabledB = document.getElementById("scheduleSwitchB").classList.contains("active");
+      var startHourB = String(document.getElementById("startHourB").value).padStart(2, "0");
+      var startMinuteB = String(document.getElementById("startMinuteB").value).padStart(2, "0");
+      var endHourB = String(document.getElementById("endHourB").value).padStart(2, "0");
+      var endMinuteB = String(document.getElementById("endMinuteB").value).padStart(2, "0");
+      var daysB = [];
+      document.querySelectorAll(".day-checkbox-b:checked").forEach(function(cb) {
+        daysB.push(dayMap[cb.value]);
+      });
+      var modeBRadio = document.querySelector('input[name="modeB"]:checked');
+      var modeB = modeBRadio ? modeBRadio.value === "true" : true;
+
+      var scheduleB = {
+        enabled: enabledB,
+        startTime: startHourB + ":" + startMinuteB,
+        endTime: endHourB + ":" + endMinuteB,
+        days: daysB,
+        mode: modeB
+      };
+
+      // ===== Save both schedules to Firebase =====
+      var schedulePayload = {
+        scheduleA: scheduleA,
+        scheduleB: scheduleB
+      };
+
+      firebase.database().ref("/schedule" + currentEditingRelay).set(schedulePayload)
+        .then(function() {
           scheduleModal.classList.remove("active");
-          showSuccess(document.getElementById("alertContainer"), "✓ Schedule saved successfully");
+          showSuccess(document.getElementById("alertContainer"), "Schedule saved successfully");
         })
-        .catch((error) => {
+        .catch(function(error) {
           console.error("Error saving schedule:", error);
-          showError(document.getElementById("alertContainer"), "❌ Failed to save schedule");
+          showError(document.getElementById("alertContainer"), "Failed to save schedule");
         });
     }
 
-    document.getElementById("deleteSched").addEventListener("click", () => {
-      firebase.database().ref(`/schedule${currentEditingRelay}`).remove()
-        .then(() => {
+    // ===== DELETE ALL SCHEDULES =====
+    document.getElementById("deleteSched").addEventListener("click", function() {
+      firebase.database().ref("/schedule" + currentEditingRelay).remove()
+        .then(function() {
           scheduleModal.classList.remove("active");
-          showSuccess(document.getElementById("alertContainer"), "✓ Schedule deleted");
+          showSuccess(document.getElementById("alertContainer"), "All schedules deleted");
         })
-        .catch((error) => {
+        .catch(function(error) {
           console.error("Error deleting schedule:", error);
-          showError(document.getElementById("alertContainer"), "❌ Failed to delete schedule");
+          showError(document.getElementById("alertContainer"), "Failed to delete schedule");
         });
     });
 
     // ===== ALL ON / ALL OFF =====
-    allOnBtn.addEventListener("click", () => {
-      for (let i = 1; i <= 4; i++) {
+    allOnBtn.addEventListener("click", function() {
+      for (var i = 1; i <= 4; i++) {
         toggleRelay(i, true);
       }
     });
 
-    allOffBtn.addEventListener("click", () => {
-      for (let i = 1; i <= 4; i++) {
+    allOffBtn.addEventListener("click", function() {
+      for (var i = 1; i <= 4; i++) {
         toggleRelay(i, false);
       }
     });
 
     // ===== LOGOUT =====
-    logoutBtn.addEventListener("click", () => {
+    logoutBtn.addEventListener("click", function() {
       isLoggedIn = false;
+      stopClock();
       loginPage.classList.remove("hidden");
       dashboard.classList.remove("active");
       relayGrid.innerHTML = "";
@@ -1293,52 +1836,6 @@
       document.getElementById("password").value = "";
       document.getElementById("errorAlert").innerHTML = "";
     });
-
-    // ===== SCHEDULE EVALUATION =====
-    // Check and apply schedule every 5 seconds
-    setInterval(() => {
-      const now = new Date();
-      const currentHour = now.getHours();
-      const currentMinute = now.getMinutes();
-      const currentDay = now.getDay();  // 0=Sun, 1=Mon, etc
-      
-      for (let i = 1; i <= 4; i++) {
-        if (!scheduleData[i] || !scheduleData[i].enabled) continue;
-        
-        const sched = scheduleData[i];
-        
-        // Check if today is active (days is boolean array or includes check)
-        let isActiveToday = false;
-        if (Array.isArray(sched.days)) {
-          isActiveToday = sched.days[currentDay] === true;
-        } else if (sched.days instanceof Object) {
-          isActiveToday = Object.values(sched.days).includes(currentDay);
-        }
-        if (!isActiveToday) continue;
-        
-        // Check if current time is in range
-        const currentTime = currentHour * 60 + currentMinute;
-        const startTime = (sched.startHour || 0) * 60 + (sched.startMinute || 0);
-        const endTime = (sched.endHour || 0) * 60 + (sched.endMinute || 0);
-        
-        let isInRange = false;
-        if (startTime < endTime) {
-          isInRange = currentTime >= startTime && currentTime <= endTime;
-        } else if (startTime > endTime) {
-          isInRange = currentTime >= startTime || currentTime <= endTime;
-        }
-        
-        // Apply schedule logic
-        const shouldBeOn = sched.mode ? isInRange : !isInRange;
-        
-        // Update relay state if needed
-        if (shouldBeOn && !relayStates[i]) {
-          firebase.database().ref(`/relay${i}`).set(true);
-        } else if (!shouldBeOn && relayStates[i]) {
-          firebase.database().ref(`/relay${i}`).set(false);
-        }
-      }
-    }, 5000);
   </script>
 </body>
 </html>
