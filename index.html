@@ -245,97 +245,55 @@
       background: rgba(255,255,255,0.3);
     }
 
-    /* ===== BATTERY VOLTAGE WIDGET ===== */
-    .battery-widget {
+    /* ===== BATTERY VOLTAGE ===== */
+    .battery-voltage {
       display: flex;
       align-items: center;
-      gap: 10px;
-      background: #f8fafc;
-      padding: 10px 16px;
+      gap: 8px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      padding: 10px 18px;
       border-radius: 8px;
-      border: 2px solid #e2e8f0;
-      min-width: 170px;
+      color: white;
+      font-weight: 700;
+      font-size: 14px;
+      box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
     }
 
-    .battery-icon-wrapper {
-      position: relative;
-      width: 40px;
-      height: 22px;
+    .voltage-label {
+      font-size: 12px;
+      opacity: 0.9;
     }
 
-    .battery-outline {
-      width: 36px;
-      height: 20px;
-      border: 2px solid #94a3b8;
-      border-radius: 3px;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .battery-outline::after {
-      content: '';
-      position: absolute;
-      right: -6px;
-      top: 4px;
-      width: 4px;
-      height: 10px;
-      background: #94a3b8;
-      border-radius: 0 2px 2px 0;
-    }
-
-    .battery-fill {
-      height: 100%;
-      width: 0%;
-      transition: width 0.5s ease, background 0.5s ease;
-      border-radius: 1px;
-    }
-
-    .battery-fill.high {
-      background: linear-gradient(90deg, #4ade80, #22c55e);
-    }
-
-    .battery-fill.medium {
-      background: linear-gradient(90deg, #facc15, #eab308);
-    }
-
-    .battery-fill.low {
-      background: linear-gradient(90deg, #f97316, #ea580c);
-    }
-
-    .battery-fill.critical {
-      background: linear-gradient(90deg, #ef4444, #dc2626);
-      animation: blink-battery 1s infinite;
-    }
-
-    @keyframes blink-battery {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.4; }
-    }
-
-    .battery-info {
-      display: flex;
-      flex-direction: column;
-      line-height: 1.3;
-    }
-
-    .battery-voltage {
-      font-size: 16px;
-      font-weight: 800;
-      color: #1e293b;
+    .voltage-value {
       font-family: 'Courier New', Courier, monospace;
-      letter-spacing: 0.5px;
+      font-size: 18px;
+      font-weight: 900;
+      min-width: 50px;
+      text-align: center;
     }
 
-    .battery-percent {
-      font-size: 11px;
-      font-weight: 600;
-      color: #64748b;
+    .voltage-status {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: #4ade80;
+      animation: pulse 2s infinite;
     }
 
-    .battery-percent.high { color: #22c55e; }
-    .battery-percent.medium { color: #eab308; }
-    .battery-percent.low { color: #ea580c; }
-    .battery-percent.critical { color: #dc2626; }
+    .voltage-status.good {
+      background: #4ade80;
+      box-shadow: 0 0 8px #4ade80;
+    }
+
+    .voltage-status.warning {
+      background: #fbbf24;
+      box-shadow: 0 0 8px #fbbf24;
+    }
+
+    .voltage-status.critical {
+      background: #ef4444;
+      box-shadow: 0 0 8px #ef4444;
+    }
 
     .connection-status {
       display: flex;
@@ -933,22 +891,25 @@
       display: flex;
       align-items: center;
       gap: 12px;
-      margin-left: auto;
-      padding: 0 10px;
+      padding: 8px 16px;
+      background: #f3f4f6;
+      border-radius: 8px;
+      flex-grow: 1;
+      min-width: 280px;
     }
 
     .brightness-control label {
       font-weight: 600;
-      color: #333;
-      white-space: nowrap;
       font-size: 13px;
+      color: #374151;
+      white-space: nowrap;
     }
 
     .brightness-slider {
-      width: 120px;
+      flex: 1;
       height: 6px;
       border-radius: 3px;
-      background: #e5e7eb;
+      background: linear-gradient(to right, #9ca3af 0%, #667eea 50%, #764ba2 100%);
       outline: none;
       -webkit-appearance: none;
       appearance: none;
@@ -961,43 +922,41 @@
       width: 18px;
       height: 18px;
       border-radius: 50%;
-      background: #3b82f6;
+      background: #667eea;
       cursor: pointer;
-      box-shadow: 0 2px 6px rgba(59, 130, 246, 0.4);
+      box-shadow: 0 2px 6px rgba(102, 126, 234, 0.4);
       transition: all 0.2s;
     }
 
     .brightness-slider::-webkit-slider-thumb:hover {
-      background: #2563eb;
-      box-shadow: 0 2px 8px rgba(37, 99, 235, 0.5);
-      width: 20px;
-      height: 20px;
+      background: #764ba2;
+      box-shadow: 0 4px 10px rgba(118, 75, 162, 0.5);
+      transform: scale(1.1);
     }
 
     .brightness-slider::-moz-range-thumb {
       width: 18px;
       height: 18px;
       border-radius: 50%;
-      background: #3b82f6;
+      background: #667eea;
       cursor: pointer;
       border: none;
-      box-shadow: 0 2px 6px rgba(59, 130, 246, 0.4);
+      box-shadow: 0 2px 6px rgba(102, 126, 234, 0.4);
       transition: all 0.2s;
     }
 
     .brightness-slider::-moz-range-thumb:hover {
-      background: #2563eb;
-      box-shadow: 0 2px 8px rgba(37, 99, 235, 0.5);
-      width: 20px;
-      height: 20px;
+      background: #764ba2;
+      box-shadow: 0 4px 10px rgba(118, 75, 162, 0.5);
+      transform: scale(1.1);
     }
 
-    #brightnessValue {
-      font-weight: 600;
-      color: #3b82f6;
-      min-width: 40px;
+    .brightness-value {
+      font-weight: 700;
+      font-size: 14px;
+      color: #667eea;
+      min-width: 35px;
       text-align: right;
-      font-size: 13px;
     }
 
     /* ===== RESPONSIVE ===== */
@@ -1036,27 +995,11 @@
         width: 100%;
       }
 
-      .brightness-control {
-        width: 100%;
-        margin-left: 0;
-        padding: 10px 0;
-      }
-
-      .brightness-slider {
-        width: 100%;
-        flex: 1;
-      }
-
       .login-card {
         margin: 20px;
       }
 
       .digital-clock {
-        width: 100%;
-        justify-content: center;
-      }
-
-      .battery-widget {
         width: 100%;
         justify-content: center;
       }
@@ -1116,18 +1059,16 @@
               <div class="clock-date" id="clockDate">--- --- --</div>
             </div>
           </div>
+          
           <!-- BATTERY VOLTAGE -->
-          <div class="battery-widget" id="batteryWidget">
-            <div class="battery-icon-wrapper">
-              <div class="battery-outline">
-                <div class="battery-fill" id="batteryFill"></div>
-              </div>
-            </div>
-            <div class="battery-info">
-              <span class="battery-voltage" id="batteryVoltage">--.- V</span>
-              <span class="battery-percent" id="batteryPercent">-- %</span>
+          <div class="battery-voltage">
+            <div class="voltage-status good" id="voltageStatus"></div>
+            <div>
+              <div class="voltage-label">Battery</div>
+              <div class="voltage-value" id="voltageValue">--V</div>
             </div>
           </div>
+          
           <div class="connection-status">
             <div class="status-dot" id="statusDot"></div>
             <span id="statusText">Connecting...</span>
@@ -1141,11 +1082,11 @@
         <button class="btn-control btn-all-on" id="allOnBtn">All ON</button>
         <button class="btn-control btn-all-off" id="allOffBtn">All OFF</button>
         
-        <!-- LED BRIGHTNESS CONTROL -->
+        <!-- BRIGHTNESS SLIDER -->
         <div class="brightness-control">
-          <label for="brightnessSlider">LED Brightness:</label>
-          <input type="range" id="brightnessSlider" min="0" max="100" value="100" class="brightness-slider">
-          <span id="brightnessValue">100%</span>
+          <label for="brightnessSlider">LED Brightness</label>
+          <input type="range" id="brightnessSlider" class="brightness-slider" min="0" max="100" value="100">
+          <span class="brightness-value" id="brightnessValue">100%</span>
         </div>
       </div>
 
@@ -1338,6 +1279,16 @@
     let currentTab = "A"; // A atau B
     let isLoggedIn = false;
     let clockInterval = null;
+    let batteryVoltage = 0.0;
+    let ledBrightness = 100;  // 0-100% for display, 0-255 for Arduino
+    let brightnessLocked = false;
+    let lastBrightnessChange = 0;
+    const BRIGHTNESS_LOCK_TIMEOUT = 10000; // 10 seconds
+    
+    // Battery voltage thresholds
+    const VOLTAGE_GOOD = 13.5;      // >= 13.5V = Good (Green)
+    const VOLTAGE_WARNING = 12.0;   // 12-13.4V = Warning (Yellow)
+    // < 12V = Critical (Red)
 
     // ===== DOM ELEMENTS =====
     const loginPage = document.getElementById("loginPage");
@@ -1351,10 +1302,6 @@
     const allOffBtn = document.getElementById("allOffBtn");
     const brightnessSlider = document.getElementById("brightnessSlider");
     const brightnessValue = document.getElementById("brightnessValue");
-    
-    // ===== LED BRIGHTNESS STATE =====
-    let ledBrightness = 100;  // 0-100%
-    let brightnessChanging = false;
 
     // ===== PASSWORD TOGGLE =====
     document.getElementById("togglePassword").addEventListener("click", function() {
@@ -1395,38 +1342,24 @@
       }
     }
 
-    // ===== BATTERY VOLTAGE =====
-    const BATTERY_FULL = 14.6;    // Tegangan penuh (V)
-    const BATTERY_EMPTY = 10.0;   // Tegangan kosong (V)
-
-    function updateBatteryDisplay(voltage) {
-      var voltageEl = document.getElementById("batteryVoltage");
-      var percentEl = document.getElementById("batteryPercent");
-      var fillEl = document.getElementById("batteryFill");
-
-      if (!voltageEl || !percentEl || !fillEl) return;
-
-      // Hitung persentase
-      var percent = ((voltage - BATTERY_EMPTY) / (BATTERY_FULL - BATTERY_EMPTY)) * 100;
-      percent = Math.max(0, Math.min(100, percent));
-      percent = Math.round(percent);
-
-      // Tentukan level
-      var level = "high";
-      if (percent <= 10) level = "critical";
-      else if (percent <= 25) level = "low";
-      else if (percent <= 50) level = "medium";
-
-      // Update tampilan
-      voltageEl.textContent = voltage.toFixed(1) + " V";
-      percentEl.textContent = percent + " %";
-
-      // Update fill bar
-      fillEl.style.width = percent + "%";
-      fillEl.className = "battery-fill " + level;
-
-      // Update percent color
-      percentEl.className = "battery-percent " + level;
+    // ===== UPDATE BATTERY VOLTAGE DISPLAY =====
+    function updateVoltageDisplay() {
+      const voltageValue = document.getElementById("voltageValue");
+      const voltageStatus = document.getElementById("voltageStatus");
+      
+      if (batteryVoltage > 0) {
+        voltageValue.textContent = batteryVoltage.toFixed(1) + "V";
+        
+        // Update status indicator color
+        voltageStatus.className = "voltage-status";
+        if (batteryVoltage >= VOLTAGE_GOOD) {
+          voltageStatus.classList.add("good");
+        } else if (batteryVoltage >= VOLTAGE_WARNING) {
+          voltageStatus.classList.add("warning");
+        } else {
+          voltageStatus.classList.add("critical");
+        }
+      }
     }
 
     // ===== SCHEDULE TAB SWITCHING =====
@@ -1531,6 +1464,28 @@
         }
       });
 
+      // Listen to battery voltage
+      firebase.database().ref("/batteryVoltage").on("value", function(snap) {
+        if (snap.exists()) {
+          batteryVoltage = snap.val();
+          updateVoltageDisplay();
+        }
+      });
+
+      // Listen to LED brightness
+      firebase.database().ref("/ledBrightness").on("value", function(snap) {
+        if (snap.exists()) {
+          var brightness255 = snap.val();
+          // Convert 0-255 to 0-100%
+          ledBrightness = Math.round((brightness255 / 255) * 100);
+          brightnessSlider.value = ledBrightness;
+          brightnessValue.textContent = ledBrightness + "%";
+          lastBrightnessChange = Date.now();
+          brightnessLocked = false;
+          console.log("[v0] Brightness synced from Firebase: " + ledBrightness + "%");
+        }
+      });
+
       // Listen to relay states
       for (var i = 1; i <= 4; i++) {
         (function(relayNum) {
@@ -1585,28 +1540,6 @@
           updateScheduleIndicator(i);
         }
       }, 60000);
-
-      // ===== LISTEN BATTERY VOLTAGE =====
-      firebase.database().ref("/voltage").on("value", function(snap) {
-        if (snap.exists()) {
-          var voltage = parseFloat(snap.val());
-          if (!isNaN(voltage) && voltage >= 0 && voltage <= 25) {
-            updateBatteryDisplay(voltage);
-          }
-        }
-      });
-
-      // ===== LISTEN LED BRIGHTNESS =====
-      firebase.database().ref("/ledBrightness").on("value", function(snap) {
-        if (snap.exists()) {
-          var brightness = parseInt(snap.val());
-          if (!isNaN(brightness) && brightness >= 0 && brightness <= 100) {
-            ledBrightness = brightness;
-            brightnessSlider.value = brightness;
-            brightnessValue.textContent = brightness + "%";
-          }
-        }
-      });
     }
 
     // ===== CREATE RELAY CARD =====
@@ -1933,17 +1866,28 @@
       }
     });
 
-    // ===== LED BRIGHTNESS CONTROL =====
+    // ===== BRIGHTNESS SLIDER =====
     brightnessSlider.addEventListener("input", function() {
       ledBrightness = parseInt(this.value);
       brightnessValue.textContent = ledBrightness + "%";
+      lastBrightnessChange = Date.now();
+      brightnessLocked = false;
       
-      // Update Firebase dengan nilai brightness baru
-      firebase.database().ref("/ledBrightness").set(ledBrightness)
-        .catch(function(error) {
-          console.error("Error updating brightness:", error);
-        });
+      // Convert 0-100% to 0-255 for Arduino
+      var brightnessValue255 = Math.round((ledBrightness / 100) * 255);
+      
+      // Update in Firebase
+      firebase.database().ref("/ledBrightness").set(brightnessValue255);
+      console.log("[v0] Brightness updated to " + ledBrightness + "% (" + brightnessValue255 + "/255)");
     });
+
+    // Auto-lock brightness after 10 seconds of inactivity
+    setInterval(function() {
+      if (!brightnessLocked && Date.now() - lastBrightnessChange >= BRIGHTNESS_LOCK_TIMEOUT) {
+        brightnessLocked = true;
+        console.log("[v0] Brightness auto-locked");
+      }
+    }, 1000);
 
     // ===== LOGOUT =====
     logoutBtn.addEventListener("click", function() {
